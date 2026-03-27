@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:nft_create/constants/const.dart';
 import 'package:nft_create/view/auth_screens.dart/otp_screens/otp_screen3.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/otp_box.dart';
@@ -29,10 +30,10 @@ class _OTPScreen2State extends State<OTPScreen2> {
 
   @override
   Widget build(BuildContext context) {
-    final c1 = TextEditingController();
-    final c2 = TextEditingController();
-    final c3 = TextEditingController();
-    final c4 = TextEditingController();
+    final otpbox1 = TextEditingController();
+    final otpbox2 = TextEditingController();
+    final otpbox3 = TextEditingController();
+    final otpbox4 = TextEditingController();
     return AppBackground(
       child: SafeArea(
         child: Scaffold(
@@ -41,11 +42,11 @@ class _OTPScreen2State extends State<OTPScreen2> {
             centerTitle: true,
             title: Text(
               "OTP Verification",
-              style: TextStyle(color: Colors.white, fontSize: 20.sp),
+              style: TextStyle(color: AppConstants.Secondary, fontSize: 20.sp),
             ),
             backgroundColor: Colors.transparent,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+              icon: Icon(Icons.arrow_back_ios, color: AppConstants.Secondary),
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -58,27 +59,33 @@ class _OTPScreen2State extends State<OTPScreen2> {
                   Text(
                     "Please enter 4 digits OTP code we sent to your mobile number.",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                    style: TextStyle(
+                      color: AppConstants.Secondary,
+                      fontSize: 16.sp,
+                    ),
                   ),
                   SizedBox(height: 60.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      otpInputBox(controller: c1),
+                      otpInputBox(controller: otpbox1),
                       SizedBox(width: 10.w),
-                      otpInputBox(controller: c2),
+                      otpInputBox(controller: otpbox2),
                       SizedBox(width: 10.w),
-                      otpInputBox(controller: c3),
+                      otpInputBox(controller: otpbox3),
                       SizedBox(width: 10.w),
-                      otpInputBox(controller: c4),
+                      otpInputBox(controller: otpbox4),
                     ],
                   ),
                   SizedBox(height: 80.h),
-                  SpinKitCircle(color: Colors.orange, size: 50.sp),
+                  SpinKitCircle(color: AppConstants.Primary, size: 50.sp),
                   SizedBox(height: 20.h),
                   Text(
                     "Verifying...",
-                    style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                    style: TextStyle(
+                      color: AppConstants.Secondary,
+                      fontSize: 16.sp,
+                    ),
                   ),
                 ],
               ),

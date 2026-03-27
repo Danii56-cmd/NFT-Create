@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
 
 class Custombutton extends StatelessWidget {
   final String text;
@@ -24,15 +25,17 @@ class Custombutton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.orange[700],
+          backgroundColor: AppConstants.Primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.r),
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: icon != null
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.center,
           children: [
-            // SizedBox(width: 17.w),
+            icon != null ? SizedBox(width: 17.w) : SizedBox.shrink(),
             Text(
               text,
               style: TextStyle(

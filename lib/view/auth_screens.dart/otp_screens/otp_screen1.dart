@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
 import 'package:nft_create/view/auth_screens.dart/otp_screens/otp_screen2.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
@@ -54,6 +56,7 @@ class _OTPScreen1State extends State<OTPScreen1> {
         controller: controller,
         focusNode: focusNode,
         keyboardType: TextInputType.number,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         textAlign: TextAlign.center,
         maxLength: 1,
         style: TextStyle(
@@ -61,12 +64,12 @@ class _OTPScreen1State extends State<OTPScreen1> {
           fontSize: 24.sp,
           fontWeight: FontWeight.bold,
         ),
-        cursorColor: Colors.orange[700],
+        cursorColor: AppConstants.Primary,
         decoration: InputDecoration(
           counterText: "",
           hintText: "•",
           filled: true,
-          fillColor: Colors.white,
+          fillColor: AppConstants.Secondary,
           hintStyle: TextStyle(
             color: Colors.grey,
             fontSize: 35.sp,
@@ -75,11 +78,11 @@ class _OTPScreen1State extends State<OTPScreen1> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.r)),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.r),
-            borderSide: BorderSide(color: Colors.orange[700]!, width: 2.w),
+            borderSide: BorderSide(color: AppConstants.Primary, width: 2.w),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.r),
-            borderSide: BorderSide(color: Colors.orange[700]!, width: 2.w),
+            borderSide: BorderSide(color: AppConstants.Primary, width: 2.w),
           ),
         ),
         onChanged: (value) {
@@ -90,7 +93,6 @@ class _OTPScreen1State extends State<OTPScreen1> {
           }
 
           checkOTP();
-
           setState(() {});
         },
       ),
@@ -105,7 +107,7 @@ class _OTPScreen1State extends State<OTPScreen1> {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+              icon: Icon(Icons.arrow_back_ios, color: AppConstants.Secondary),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -113,7 +115,10 @@ class _OTPScreen1State extends State<OTPScreen1> {
             title: Center(
               child: Text(
                 "OTP Verification",
-                style: TextStyle(color: Colors.white, fontSize: 20.sp),
+                style: TextStyle(
+                  color: AppConstants.Secondary,
+                  fontSize: 20.sp,
+                ),
               ),
             ),
             backgroundColor: Colors.transparent,
@@ -125,7 +130,10 @@ class _OTPScreen1State extends State<OTPScreen1> {
                 children: [
                   Text(
                     "Enter the 4-digit code sent to your mobile number.",
-                    style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                    style: TextStyle(
+                      color: AppConstants.Secondary,
+                      fontSize: 16.sp,
+                    ),
                   ),
                   SizedBox(height: 60.h),
                   Row(
@@ -167,7 +175,7 @@ class _OTPScreen1State extends State<OTPScreen1> {
                         child: Text(
                           "Resend code ",
                           style: TextStyle(
-                            color: Colors.orange[700],
+                            color: AppConstants.Primary,
                             fontSize: 12.sp,
                           ),
                         ),
@@ -175,7 +183,7 @@ class _OTPScreen1State extends State<OTPScreen1> {
                       Text(
                         "in 29 seconds",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppConstants.Secondary,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -222,7 +230,7 @@ class _OTPScreen1State extends State<OTPScreen1> {
                     width: 370.w,
                     icon: Icon(
                       Icons.arrow_forward_ios,
-                      color: Colors.white,
+                      color: AppConstants.Secondary,
                       size: 20.sp,
                     ),
                   ),

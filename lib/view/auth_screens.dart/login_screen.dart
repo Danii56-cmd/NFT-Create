@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
+import 'package:nft_create/view/auth_screens.dart/forgot_pass_screen.dart';
 import 'package:nft_create/view/auth_screens.dart/signup_screen.dart';
+import 'package:nft_create/view/homescreen.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
 import 'package:nft_create/widgets/customtextformfield.dart';
@@ -27,11 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image(image: AssetImage("assets/images/LOGO.png")),
+                  Image(image: AssetImage(AppConstants.Logo)),
                   Text(
                     "NFT",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppConstants.Secondary,
                       fontSize: 50.0.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -41,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: "Enter your email",
                     prefixIcon: Icon(
                       Icons.email,
-                      color: Colors.orange[700],
+                      color: AppConstants.Primary,
                       size: 20.sp,
                     ),
                     suffixIcon: const SizedBox.shrink(),
@@ -52,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: "Enter your password",
                     prefixIcon: Icon(
                       Icons.lock,
-                      color: Colors.orange[700],
+                      color: AppConstants.Primary,
                       size: 20.sp,
                     ),
                     suffixIcon: IconButton(
@@ -60,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _obscurePassword
                             ? Icons.visibility
                             : Icons.visibility_off,
-                        color: Colors.orange[700],
+                        color: AppConstants.Primary,
                         size: 20.sp,
                       ),
                       onPressed: () {
@@ -79,19 +82,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(right: 05.0),
                         child: GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         ForgotPassScreen1(otp: ''),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ForgotPasswordScreen1(otp: ''),
+                              ),
+                            );
                           },
 
                           child: Text(
                             "Forgot the password?",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppConstants.Secondary,
                               fontSize: 10.sp,
                             ),
                           ),
@@ -105,7 +108,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Text(
                         "Don't have an account? ",
-                        style: TextStyle(color: Colors.white, fontSize: 12.sp),
+                        style: TextStyle(
+                          color: AppConstants.Secondary,
+                          fontSize: 12.sp,
+                        ),
                       ),
                       InkWell(
                         onTap: () {
@@ -119,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           "Sign Up",
                           style: TextStyle(
-                            color: Colors.orange[700],
+                            color: AppConstants.Primary,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
                           ),
@@ -132,12 +138,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   // lib/view/login_screen/login_screen.dart
                   Custombutton(
                     text: "Login",
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Homescreen()),
+                      );
+                    },
                     height: 60.h,
                     width: 370.w,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_forward_ios,
-                      color: Colors.white,
+                      color: AppConstants.Secondary,
                     ),
                   ),
                   SizedBox(height: 20.0.h),
@@ -146,11 +157,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: AppConstants.Secondary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.r),
                           side: BorderSide(
-                            color: Colors.orange[700]!,
+                            color: AppConstants.Primary,
                             width: 1.0.w,
                           ),
                         ),
@@ -159,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Image(
-                            image: AssetImage("assets/images/google.png"),
+                            image: AssetImage(AppConstants.Google),
                             height: 20.h,
                             width: 20.w,
                           ),

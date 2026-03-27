@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
 import 'package:nft_create/view/onboarding_screens/onboarding_screen2.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
@@ -35,7 +36,7 @@ class OnboardingScreen1 extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 80.r,
                       backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage("assets/images/LOGO.png"),
+                      backgroundImage: AssetImage(AppConstants.Logo),
                     ),
                   ),
                 ],
