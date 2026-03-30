@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nft_create/constants/const.dart';
-import 'package:nft_create/view/auth_screens.dart/forgot_pass_screen.dart';
+// import 'package:nft_create/view/auth_screens.dart/forgot_pass_screen.dart';
 import 'package:nft_create/view/auth_screens.dart/signup_screen.dart';
 import 'package:nft_create/view/homescreen.dart';
 import 'package:nft_create/widgets/app_background.dart';
@@ -82,13 +82,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(right: 05.0),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    ForgotPasswordScreen1(otp: ''),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         ForgotPasswordScreen1(otp: ''),
+                            //   ),
+                            // );
                           },
 
                           child: Text(
