@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
 
 class AppBackground extends StatelessWidget {
   final Widget child;
@@ -13,7 +14,7 @@ class AppBackground extends StatelessWidget {
       width: 1.sh,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/background.png"),
+          image: AssetImage(AppConstants.BgImage),
           fit: BoxFit.cover,
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
 import 'package:nft_create/widgets/app_background.dart';
 
 class OTPScreen3 extends StatelessWidget {
@@ -15,7 +16,7 @@ class OTPScreen3 extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: Colors.orange, width: 2),
+        border: Border.all(color: AppConstants.Primary, width: 2),
       ),
       child: Text(
         number,
@@ -73,7 +74,11 @@ class OTPScreen3 extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 80.h),
-                  Icon(Icons.verified, color: Colors.orange, size: 80.sp),
+                  Icon(
+                    Icons.verified,
+                    color: AppConstants.Primary,
+                    size: 80.sp,
+                  ),
                   SizedBox(height: 20.h),
                   Text(
                     "Account created Successfully",

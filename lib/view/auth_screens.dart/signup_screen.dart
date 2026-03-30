@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:nft_create/constants/const.dart';
+import 'package:nft_create/view/auth_screens.dart/otp_screens/otp_screen1.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
 import 'package:nft_create/widgets/customtextformfield.dart';
@@ -27,11 +29,11 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image(image: AssetImage("assets/images/LOGO.png")),
+                  Image(image: AssetImage(AppConstants.Logo)),
                   Text(
                     "NFT",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppConstants.Secondary,
                       fontSize: 50.0.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -42,7 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     hintText: "Enter your email",
                     prefixIcon: Icon(
                       Icons.email,
-                      color: Colors.orange[700],
+                      color: AppConstants.Primary,
                       size: 20.sp,
                     ),
                     suffixIcon: const SizedBox.shrink(),
@@ -56,13 +58,16 @@ class _SignupScreenState extends State<SignupScreen> {
                     children: [
                       IntlPhoneField(
                         textAlign: TextAlign.center,
-                        cursorColor: Colors.orange[700],
+                        cursorColor: AppConstants.Primary,
                         initialCountryCode: 'PK',
-                        style: TextStyle(color: Colors.white, fontSize: 12.sp),
+                        style: TextStyle(
+                          color: AppConstants.Secondary,
+                          fontSize: 12.sp,
+                        ),
                         decoration: InputDecoration(
                           hintText: 'Mobile number',
                           hintStyle: TextStyle(
-                            color: Colors.white,
+                            color: AppConstants.Secondary,
                             fontSize: 12.sp,
                           ),
                           contentPadding: EdgeInsets.symmetric(
@@ -72,21 +77,21 @@ class _SignupScreenState extends State<SignupScreen> {
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
                             borderSide: BorderSide(
-                              color: Colors.orange[700]!,
+                              color: AppConstants.Primary,
                               width: 2.w,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
                             borderSide: BorderSide(
-                              color: Colors.orange[700]!,
+                              color: AppConstants.Primary,
                               width: 2.w,
                             ),
                           ),
                         ),
                         dropdownIcon: Icon(
                           Icons.arrow_drop_down,
-                          color: Colors.orange[700],
+                          color: AppConstants.Primary,
                         ),
                         onChanged: (phone) {},
                       ),
@@ -107,7 +112,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     hintText: "Enter your password",
                     prefixIcon: Icon(
                       Icons.lock,
-                      color: Colors.orange[700],
+                      color: AppConstants.Primary,
                       size: 20.sp,
                     ),
                     suffixIcon: IconButton(
@@ -115,7 +120,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         _obscurePassword
                             ? Icons.visibility
                             : Icons.visibility_off,
-                        color: Colors.orange[700],
+                        color: AppConstants.Primary,
                         size: 20.sp,
                       ),
                       onPressed: () {
@@ -126,23 +131,47 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     obscureText: _obscurePassword,
                   ),
-
                   SizedBox(height: 30.0.h),
-
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account? ",
+                        style: TextStyle(
+                          color: AppConstants.Secondary,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                            color: AppConstants.Primary,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30.0.h),
                   // ── Fixed: Use Custombutton here ──
                   Custombutton(
                     text: "Signup",
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => OTPScreen1()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => OTPScreen1()),
+                      );
                     },
                     height: 60.h,
                     width: 370.w,
                     icon: Icon(
                       Icons.arrow_forward_ios,
-                      color: Colors.white,
+                      color: AppConstants.Secondary,
                       size: 20.sp,
                     ),
                   ),
@@ -154,28 +183,31 @@ class _SignupScreenState extends State<SignupScreen> {
                     children: [
                       CircleAvatar(
                         radius: 3.r,
-                        backgroundColor: Colors.orange[700],
+                        backgroundColor: AppConstants.Primary,
                       ),
                       Container(
                         width: 100.w,
                         height: 2.h,
-                        color: Colors.orange[700],
+                        color: AppConstants.Primary,
                       ),
                       SizedBox(width: 20.0.w),
                       Text(
                         "or signup with",
-                        style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                        style: TextStyle(
+                          color: AppConstants.Secondary,
+                          fontSize: 14.sp,
+                        ),
                       ),
                       SizedBox(width: 20.0.w),
                       Container(
                         width: 92.w,
                         height: 02.h,
 
-                        color: Colors.orange[700],
+                        color: AppConstants.Primary,
                       ),
                       CircleAvatar(
                         radius: 3.r,
-                        backgroundColor: Colors.orange[700],
+                        backgroundColor: AppConstants.Primary,
                       ),
                     ],
                   ),
@@ -188,12 +220,12 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: AppConstants.Secondary,
                         foregroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.r),
                           side: BorderSide(
-                            color: Colors.orange[700]!,
+                            color: AppConstants.Primary,
                             width: 1.0.w,
                           ),
                         ),
