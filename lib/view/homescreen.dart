@@ -24,7 +24,7 @@ class _HomescreenState extends State<Homescreen> {
             children: [
               IconButton(
                 onPressed: () {
-                  print("object");
+                  Scaffold.of(context).openDrawer();
                 },
                 icon: Transform.scale(
                   scaleY: -1,

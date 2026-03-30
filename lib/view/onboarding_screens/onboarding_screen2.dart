@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nft_create/view/auth_screens.dart/login_screen.dart';
-import 'package:nft_create/view/onboarding_screens/onboarding_screen3.dart';
+// import 'package:nft_create/view/onboarding_screens/onboarding_screen3.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
 
 class OnboardingScreen2 extends StatelessWidget {
-  const OnboardingScreen2({super.key});
+  final VoidCallback onNext;
+  final VoidCallback onBack;
+  const OnboardingScreen2({
+    super.key,
+    required this.onNext,
+    required this.onBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,24 +71,24 @@ class OnboardingScreen2 extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(radius: 08.r, backgroundColor: Colors.white),
-                      SizedBox(width: 05.w),
-                      CircleAvatar(
-                        radius: 09.r,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: 08.r,
-                          backgroundColor: Colors.orange[700],
-                        ),
-                      ),
-                      SizedBox(width: 05.w),
-                      CircleAvatar(radius: 08.r, backgroundColor: Colors.white),
-                    ],
-                  ),
+                  SizedBox(height: 70.h),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     CircleAvatar(radius: 08.r, backgroundColor: Colors.white),
+                  //     SizedBox(width: 05.w),
+                  //     CircleAvatar(
+                  //       radius: 09.r,
+                  //       backgroundColor: Colors.white,
+                  //       child: CircleAvatar(
+                  //         radius: 08.r,
+                  //         backgroundColor: Colors.orange[700],
+                  //       ),
+                  //     ),
+                  //     SizedBox(width: 05.w),
+                  //     CircleAvatar(radius: 08.r, backgroundColor: Colors.white),
+                  //   ],
+                  // ),
                   SizedBox(height: 30.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -91,22 +97,13 @@ class OnboardingScreen2 extends StatelessWidget {
                         height: 60.h,
                         width: 150.w,
                         text: "Back",
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: onBack,
                       ),
                       Custombutton(
                         height: 60.h,
                         width: 150.w,
                         text: "Next",
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OnboardingScreen3(),
-                            ),
-                          );
-                        },
+                        onPressed: onNext,
                       ),
                     ],
                   ),
