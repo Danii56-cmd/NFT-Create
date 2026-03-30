@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Homescreen()),
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
                       );
                     },
                     height: 60.h,

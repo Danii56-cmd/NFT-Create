@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nft_create/view/onboarding_screens/onboarding_mainscreen.dart';
+import 'package:nft_create/view/homescreen.dart';
 // import 'package:nft_create/view/onboarding_screens/onboarding_screen1.dart';
 
 void main() {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'NFT App',
-          home: OnboardingMain(),
+          home: HomeScreen(),
         );
       },
     );
