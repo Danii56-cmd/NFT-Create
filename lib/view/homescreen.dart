@@ -220,8 +220,8 @@ class HomeScreen extends StatelessWidget {
                                     },
                                     borderRadius: BorderRadius.circular(8),
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 8.w,
                                       ),
                                       height: 24.h,
                                       decoration: BoxDecoration(
