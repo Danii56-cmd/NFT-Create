@@ -27,7 +27,7 @@ class ExchangeScreen extends StatelessWidget {
               child: Text(
                 'Currency Exchange',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppConstants.Secondary,
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
@@ -83,7 +83,7 @@ class ExchangeScreen extends StatelessWidget {
                               Text(
                                 "USD",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppConstants.Secondary,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -91,7 +91,7 @@ class ExchangeScreen extends StatelessWidget {
                               SizedBox(width: 20.w),
                               Icon(
                                 Icons.keyboard_arrow_down,
-                                color: Colors.white,
+                                color: AppConstants.Secondary,
                               ),
                               Spacer(),
                               Container(
@@ -120,7 +120,7 @@ class ExchangeScreen extends StatelessWidget {
                           Text(
                             "Balance: 2000",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppConstants.Secondary,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -178,7 +178,7 @@ class ExchangeScreen extends StatelessWidget {
                               Text(
                                 "PKR",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppConstants.Secondary,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -186,7 +186,7 @@ class ExchangeScreen extends StatelessWidget {
                               SizedBox(width: 20.w),
                               Icon(
                                 Icons.keyboard_arrow_down,
-                                color: Colors.white,
+                                color: AppConstants.Secondary,
                               ),
                               Spacer(),
                               Container(
@@ -215,7 +215,7 @@ class ExchangeScreen extends StatelessWidget {
                           Text(
                             "Balance: 0",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppConstants.Secondary,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
