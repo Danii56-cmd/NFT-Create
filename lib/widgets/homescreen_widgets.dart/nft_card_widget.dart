@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
 
 class NFTCard extends StatelessWidget {
   const NFTCard({super.key});
@@ -13,7 +14,7 @@ class NFTCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xff2a2a2a),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.orange, width: 1.5),
+        border: Border.all(color: AppConstants.Primary, width: 1.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +25,7 @@ class NFTCard extends StatelessWidget {
               Container(
                 height: 140,
                 decoration: BoxDecoration(
-                  color: Colors.orange,
+                  color: AppConstants.Primary,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ClipRRect(
@@ -53,13 +54,16 @@ class NFTCard extends StatelessWidget {
                     color: Colors.black87,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
                       Icon(Icons.favorite, color: Colors.red, size: 8),
                       SizedBox(width: 4),
                       Text(
                         "100",
-                        style: TextStyle(color: Colors.white, fontSize: 6),
+                        style: TextStyle(
+                          color: AppConstants.Secondary,
+                          fontSize: 6,
+                        ),
                       ),
                     ],
                   ),
@@ -77,7 +81,7 @@ class NFTCard extends StatelessWidget {
               Text(
                 "Stylish Monkey",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppConstants.Secondary,
                   fontWeight: FontWeight.bold,
                   fontSize: 12.sp,
                 ),
@@ -150,15 +154,15 @@ class NFTCard extends StatelessWidget {
 
                     width: 110.w,
                     decoration: BoxDecoration(
-                      color: Colors.orange,
+                      color: AppConstants.Primary,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     alignment: Alignment.center,
-                    child: const Text(
+                    child: Text(
                       "Buy Now",
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
+                        color: AppConstants.Secondary,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -166,18 +170,18 @@ class NFTCard extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
 
               Container(
-                height: 24,
-                width: 24,
+                height: 24.h,
+                width: 24.w,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppConstants.Secondary,
                   borderRadius: BorderRadius.circular(5.r),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.shopping_cart,
-                  color: Colors.orange,
+                  color: AppConstants.Primary,
                   size: 18,
                 ),
               ),

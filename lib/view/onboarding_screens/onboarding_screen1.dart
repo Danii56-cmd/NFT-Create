@@ -24,7 +24,7 @@ class OnboardingScreen1 extends StatelessWidget {
                   Container(
                     height: 280.h,
                     decoration: BoxDecoration(
-                      color: Colors.orange[700],
+                      color: AppConstants.Primary,
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(110.r),
                         bottomLeft: Radius.circular(110.r),

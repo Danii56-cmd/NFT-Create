@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
+import 'package:nft_create/view/wallet_screens/createwallet_screen.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/homescreen_widgets.dart/nft_card_widget.dart';
 import 'package:nft_create/widgets/homescreen_widgets.dart/tabs.dart';
@@ -25,20 +27,20 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Icon(Icons.menu, color: Colors.orange, size: 28),
-                    const Text(
+                    Icon(Icons.menu, color: AppConstants.Primary, size: 28),
+                    Text(
                       "Explore NFT",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppConstants.Secondary,
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Stack(
-                      children: const [
+                      children: [
                         Icon(
                           Icons.notifications_none,
-                          color: Colors.orange,
+                          color: AppConstants.Primary,
                           size: 28,
                         ),
                         Positioned(
@@ -64,11 +66,14 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 8.w),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: Colors.orange, width: 1.5.w),
+                      border: Border.all(
+                        color: AppConstants.Primary,
+                        width: 1.5.w,
+                      ),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(Icons.search, color: Colors.orange),
+                        Icon(Icons.search, color: AppConstants.Primary),
                         SizedBox(width: 10),
                         Text("Search", style: TextStyle(color: Colors.grey)),
                       ],
@@ -76,12 +81,12 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
 
                 /// TABS (FIXED)
                 CustomTabs(),
 
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
 
                 GridView.builder(
                   shrinkWrap: true,
@@ -98,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
 
-                const SizedBox(height: 25),
+                SizedBox(height: 25.h),
 
                 Container(
                   height: 243.h,
@@ -106,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: const Color(0xff2a2a2a),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.orange, width: 2),
+                    border: Border.all(color: AppConstants.Primary, width: 2.w),
                   ),
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -117,7 +122,7 @@ class HomeScreen extends StatelessWidget {
                         height: 210.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppConstants.Secondary,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         padding: const EdgeInsets.all(12),
@@ -132,7 +137,7 @@ class HomeScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4.h),
                             Row(
                               children: [
                                 Column(
@@ -142,21 +147,21 @@ class HomeScreen extends StatelessWidget {
                                 Text(
                                   "\$18500",
                                   style: TextStyle(
-                                    color: Colors.orange,
+                                    color: AppConstants.Primary,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(width: 20),
+                                SizedBox(width: 20.w),
                                 Icon(
                                   Icons.visibility_outlined,
                                   color: Colors.black,
-                                  size: 10,
+                                  size: 10.sp,
                                 ),
                               ],
                             ),
 
-                            const SizedBox(height: 12),
+                            SizedBox(height: 12.h),
 
                             // Chart Image + Button in Row (Side by Side)
                             Row(
@@ -177,14 +182,14 @@ class HomeScreen extends StatelessWidget {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.asset(
-                                        'assets/images/balancechart.png',
+                                        AppConstants.Balancechart,
                                         fit: BoxFit.contain,
                                       ),
                                     ),
                                   ),
                                 ),
 
-                                const SizedBox(width: 10),
+                                SizedBox(width: 10.w),
 
                                 // Top Up Balance Button - Moved to bottom right
                                 Align(
@@ -192,7 +197,13 @@ class HomeScreen extends StatelessWidget {
                                       .bottomRight, // ← This pushes button to bottom right
                                   child: InkWell(
                                     onTap: () {
-                                      // Your action here
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CreatewalletScreen(),
+                                        ),
+                                      );
                                     },
                                     borderRadius: BorderRadius.circular(8),
                                     child: Container(
@@ -201,24 +212,24 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       height: 24.h,
                                       decoration: BoxDecoration(
-                                        color: Colors.orange,
+                                        color: AppConstants.Primary,
                                         borderRadius: BorderRadius.circular(8),
                                       ),
-                                      child: const Row(
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.add,
-                                            color: Colors.white,
-                                            size: 14,
+                                            color: AppConstants.Secondary,
+                                            size: 14.sp,
                                           ),
                                           Text(
                                             "Top Up Balance",
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: AppConstants.Secondary,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 10,
+                                              fontSize: 10.sp,
                                             ),
                                           ),
                                         ],
@@ -235,18 +246,18 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
               ],
             ),
           ),
         ),
 
         bottomNavigationBar: Container(
-          margin: const EdgeInsets.only(left: 12, right: 12, bottom: 20),
-          height: 80,
+          margin: EdgeInsets.only(left: 12.w, right: 12.w, bottom: 20.h),
+          height: 70.h,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: Colors.orange),
+            borderRadius: BorderRadius.circular(30.r),
+            border: Border.all(color: AppConstants.Primary),
           ),
           child: Padding(
             padding: EdgeInsets.all(7.h),
@@ -278,11 +289,14 @@ class BottomIcon extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundColor: Colors.orange,
-          child: Icon(icon, color: Colors.white),
+          backgroundColor: AppConstants.Primary,
+          child: Icon(icon, color: AppConstants.Secondary),
         ),
-        const SizedBox(height: 5),
-        Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
+        SizedBox(height: 5.h),
+        Text(
+          label,
+          style: TextStyle(color: AppConstants.Secondary, fontSize: 12.sp),
+        ),
       ],
     );
   }
