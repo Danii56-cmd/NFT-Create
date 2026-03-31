@@ -79,20 +79,7 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 /// TABS (FIXED)
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      tabItem("Recent", false),
-                      SizedBox(width: 20.w),
-                      tabItem("Top NFTs", true),
-                      SizedBox(width: 20.w),
-                      tabItem("My NFTs", false),
-                      SizedBox(width: 20.w),
-                      tabItem("Gaming", false),
-                    ],
-                  ),
-                ),
+                CustomTabs(),
 
                 const SizedBox(height: 20),
 
