@@ -9,7 +9,8 @@ class Custombutton extends StatelessWidget {
   final double width;
   final Widget? icon;
 
-  Custombutton({
+  const Custombutton({
+    super.key,
     required this.text,
     required this.onPressed,
     required this.height,
@@ -25,17 +26,15 @@ class Custombutton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppConstants.Primary,
+          backgroundColor: Colors.orange[700],
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.r),
           ),
         ),
         child: Row(
-          mainAxisAlignment: icon != null
-              ? MainAxisAlignment.spaceBetween
-              : MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            icon != null ? SizedBox(width: 17.w) : SizedBox.shrink(),
+            // SizedBox(width: 17.w),
             Text(
               text,
               style: TextStyle(

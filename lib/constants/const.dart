@@ -13,6 +13,7 @@ class AppConstants {
   static String Exchange = "assets/images/exchange.png";
   static String Deposit = "assets/images/deposit.png";
   static String Withdraw = "assets/images/withdraw.png";
+  static String Balancechart = "assets/images/balancechart.png";
   // static String History = "assets/images/history.png";
-  // static String Wallet = "assets/images/walleticon.png";
+  static String Wallet = "assets/images/walleticon.png";
 }
