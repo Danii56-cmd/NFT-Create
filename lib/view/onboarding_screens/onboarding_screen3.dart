@@ -5,7 +5,13 @@ import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
 
 class OnboardingScreen3 extends StatelessWidget {
-  const OnboardingScreen3({super.key});
+  final VoidCallback onNext;
+  final VoidCallback onBack;
+  const OnboardingScreen3({
+    super.key,
+    required this.onNext,
+    required this.onBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -64,46 +70,37 @@ class OnboardingScreen3 extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(radius: 08.r, backgroundColor: Colors.white),
-                      SizedBox(width: 05.w),
-                      CircleAvatar(radius: 08.r, backgroundColor: Colors.white),
-                      SizedBox(width: 05.w),
-                      CircleAvatar(
-                        radius: 09.r,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: 08.r,
-                          backgroundColor: Colors.orange[700],
-                        ),
-                      ),
-                    ],
-                  ),
+                  SizedBox(height: 70.h),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     CircleAvatar(radius: 08.r, backgroundColor: Colors.white),
+                  //     SizedBox(width: 05.w),
+                  //     CircleAvatar(radius: 08.r, backgroundColor: Colors.white),
+                  //     SizedBox(width: 05.w),
+                  //     CircleAvatar(
+                  //       radius: 09.r,
+                  //       backgroundColor: Colors.white,
+                  //       child: CircleAvatar(
+                  //         radius: 08.r,
+                  //         backgroundColor: Colors.orange[700],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(height: 30.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Custombutton(
                         text: "Back",
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: onBack,
                         height: 60.h,
                         width: 150.w,
                       ),
                       Custombutton(
                         text: "Next",
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
-                            ),
-                          );
-                        },
+                        onPressed: onNext,
                         height: 60.h,
                         width: 150.w,
                       ),

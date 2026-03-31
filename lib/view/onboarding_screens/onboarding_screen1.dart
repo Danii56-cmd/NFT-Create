@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nft_create/view/onboarding_screens/onboarding_screen2.dart';
+import 'package:nft_create/constants/const.dart';
+// import 'package:nft_create/view/onboarding_screens/onboarding_screen2.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
 
 class OnboardingScreen1 extends StatelessWidget {
-  const OnboardingScreen1({super.key});
+  final VoidCallback onNext;
+  const OnboardingScreen1({super.key, required this.onNext});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class OnboardingScreen1 extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 80.r,
                       backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage("assets/images/LOGO.png"),
+                      backgroundImage: AssetImage(AppConstants.Logo),
                     ),
                   ),
                 ],
@@ -62,24 +64,24 @@ class OnboardingScreen1 extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 30.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 09.r,
-                    backgroundColor: Colors.white,
-                    child: CircleAvatar(
-                      radius: 8.r,
-                      backgroundColor: Colors.orange[700],
-                    ),
-                  ),
-                  SizedBox(width: 5.w),
-                  CircleAvatar(radius: 8.r, backgroundColor: Colors.white),
-                  SizedBox(width: 5.w),
-                  CircleAvatar(radius: 8.r, backgroundColor: Colors.white),
-                ],
-              ),
+              SizedBox(height: 70.h),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     CircleAvatar(
+              //       radius: 09.r,
+              //       backgroundColor: Colors.white,
+              //       child: CircleAvatar(
+              //         radius: 8.r,
+              //         backgroundColor: Colors.orange[700],
+              //       ),
+              //     ),
+              //     SizedBox(width: 5.w),
+              //     CircleAvatar(radius: 8.r, backgroundColor: Colors.white),
+              //     SizedBox(width: 5.w),
+              //     CircleAvatar(radius: 8.r, backgroundColor: Colors.white),
+              //   ],
+              // ),
               SizedBox(height: 25.h),
               Custombutton(
                 height: 60.h,
@@ -90,14 +92,7 @@ class OnboardingScreen1 extends StatelessWidget {
                   size: 20.sp,
                 ),
                 text: "Continue",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OnboardingScreen2(),
-                    ),
-                  );
-                },
+                onPressed: onNext,
               ),
               SizedBox(height: 20.h),
             ],
