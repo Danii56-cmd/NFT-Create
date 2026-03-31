@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
 
 class Custombutton extends StatelessWidget {
   final String text;
@@ -37,7 +38,7 @@ class Custombutton extends StatelessWidget {
             Text(
               text,
               style: TextStyle(
-                color: Colors.white,
+                color: AppConstants.Secondary,
                 fontSize: 15.sp,
                 fontWeight: FontWeight.bold,
               ),
