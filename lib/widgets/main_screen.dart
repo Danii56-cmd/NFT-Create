@@ -4,7 +4,9 @@ import 'package:nft_create/constants/const.dart';
 import 'package:nft_create/view/create_screens.dart';
 import 'package:nft_create/view/homescreen.dart';
 import 'package:nft_create/view/market_screen.dart';
+import 'package:nft_create/view/wallet_screens/createwallet_screen.dart';
 import 'package:nft_create/view/wallet_screens/mywallet_screen.dart';
+import 'package:nft_create/widgets/app_background.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,15 +21,18 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> screens = [
     HomeScreen(),
     CreateScreens(),
+    const HomeScreen(),
+    NFTCreatorScreen(),
     MarketScreen(),
-    WalletScreen(),
+    CreatewalletScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xff1e1e1e),
-      body: screens[selectedIndex],
+    return AppBackground(
+      child: Scaffold(
+        backgroundColor: Colors.black38,
+        body: screens[selectedIndex],
 
       bottomNavigationBar: Container(
         margin: EdgeInsets.only(left: 12.w, right: 12.w, bottom: 20.h),
@@ -65,6 +70,44 @@ class _MainScreenState extends State<MainScreen> {
               onTap: () => setState(() => selectedIndex = 3),
             ),
           ],
+
+        bottomNavigationBar: Container(
+          margin: EdgeInsets.only(left: 12.w, right: 12.w, bottom: 20.h),
+          height: 70.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30.r),
+            border: Border.all(color: Colors.orange),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              BottomIcon(
+                icon: Icons.home,
+                label: "Home",
+                isSelected: selectedIndex == 0,
+                onTap: () => setState(() => selectedIndex = 0),
+              ),
+              BottomIcon(
+                icon: Icons.add,
+                label: "Create",
+                isSelected: selectedIndex == 1,
+                onTap: () => setState(() => selectedIndex = 1),
+              ),
+              BottomIcon(
+                icon: Icons.bar_chart,
+                label: "Market",
+                isSelected: selectedIndex == 2,
+                onTap: () => setState(() => selectedIndex = 2),
+              ),
+              BottomIcon(
+                icon: Icons.wallet,
+                label: "Wallet",
+                isSelected: selectedIndex == 3,
+                onTap: () => setState(() => selectedIndex = 3),
+              ),
+            ],
+          ),
+
         ),
       ),
     );
