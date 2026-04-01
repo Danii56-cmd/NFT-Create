@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nft_create/constants/const.dart';
 import 'package:nft_create/view/wallet_screens/createwallet_screen.dart';
 import 'package:nft_create/widgets/app_background.dart';
+import 'package:nft_create/widgets/homescreen_widgets.dart/custom_drawer_widget.dart';
 import 'package:nft_create/widgets/homescreen_widgets.dart/nft_card_widget.dart';
 import 'package:nft_create/widgets/homescreen_widgets.dart/tabs.dart';
 
@@ -14,6 +15,7 @@ class HomeScreen extends StatelessWidget {
     return AppBackground(
       child: Scaffold(
         backgroundColor: const Color(0xff1e1e1e),
+        drawer: CustomDrawer(),
 
         body: SafeArea(
           child: SingleChildScrollView(
@@ -27,7 +29,18 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.menu, color: AppConstants.Primary, size: 28),
+                    Builder(
+                      builder: (context) => IconButton(
+                        icon: Icon(
+                          Icons.menu,
+                          color: AppConstants.Primary,
+                          size: 28,
+                        ),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer(); // Now safe
+                        },
+                      ),
+                    ),
                     Text(
                       "Explore NFT",
                       style: TextStyle(
@@ -84,20 +97,7 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(height: 20.h),
 
                 /// TABS (FIXED)
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      tabItem("Recent", false),
-                      SizedBox(width: 20.w),
-                      tabItem("Top NFTs", true),
-                      SizedBox(width: 20.w),
-                      tabItem("My NFTs", false),
-                      SizedBox(width: 20.w),
-                      tabItem("Gaming", false),
-                    ],
-                  ),
-                ),
+                CustomTabs(),
 
                 SizedBox(height: 20.h),
 
@@ -265,52 +265,52 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
 
-        bottomNavigationBar: Container(
-          margin: EdgeInsets.only(left: 12.w, right: 12.w, bottom: 20.h),
-          height: 70.h,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.r),
-            border: Border.all(color: AppConstants.Primary),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(7.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                BottomIcon(Icons.home, "Home"),
-                BottomIcon(Icons.add, "Create"),
-                BottomIcon(Icons.bar_chart, "Market"),
-                BottomIcon(Icons.wallet, "Wallet"),
-              ],
-            ),
-          ),
-        ),
+        // bottomNavigationBar: Container(
+        //   margin: EdgeInsets.only(left: 12.w, right: 12.w, bottom: 26.h),
+        //   height: 70.h,
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(30.r),
+        //     border: Border.all(color: AppConstants.Primary),
+        //   ),
+        //   child: Padding(
+        //     padding: EdgeInsets.all(5.h),
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //       children: [
+        //         BottomIcon(Icons.home, "Home"),
+        //         BottomIcon(Icons.add, "Create"),
+        //         BottomIcon(Icons.bar_chart, "Market"),
+        //         BottomIcon(Icons.wallet, "Wallet"),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
 }
 
 /// BOTTOM ICON
-class BottomIcon extends StatelessWidget {
-  final IconData icon;
-  final String label;
+// class BottomIcon extends StatelessWidget {
+//   final IconData icon;
+//   final String label;
 
-  const BottomIcon(this.icon, this.label, {super.key});
+//   const BottomIcon(this.icon, this.label, {super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          backgroundColor: AppConstants.Primary,
-          child: Icon(icon, color: AppConstants.Secondary),
-        ),
-        SizedBox(height: 5.h),
-        Text(
-          label,
-          style: TextStyle(color: AppConstants.Secondary, fontSize: 12.sp),
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         CircleAvatar(
+//           backgroundColor: AppConstants.Primary,
+//           child: Icon(icon, color: AppConstants.Secondary),
+//         ),
+//         SizedBox(height: 5.h),
+//         Text(
+//           label,
+//           style: TextStyle(color: AppConstants.Secondary, fontSize: 12.sp),
+//         ),
+//       ],
+//     );
+//   }
+// }
