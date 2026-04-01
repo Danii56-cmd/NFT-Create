@@ -1,12 +1,13 @@
-// lib/widgets/nft_widgets/draggable_emoji.dart
+// lib/widgets/nft_widgets/draggable_shapes.dart
 
 import 'package:flutter/material.dart';
-import 'package:nft_create/models/emoji_item.dart';
+import 'package:nft_create/enums.dart';
+import 'package:nft_create/models/shape_item.dart';
 
 const kOrange = Color(0xFFF5A623);
 
-class DraggableEmoji extends StatefulWidget {
-  final EmojiItem item;
+class DraggableShape extends StatefulWidget {
+  final ShapeItem item;
   final bool locked;
   final ValueChanged<Offset> onMove;
   final VoidCallback onDelete;
@@ -14,7 +15,7 @@ class DraggableEmoji extends StatefulWidget {
   final VoidCallback onDuplicate;
   final VoidCallback onToggleLock;
 
-  const DraggableEmoji({
+  const DraggableShape({
     super.key,
     required this.item,
     required this.locked,
@@ -26,70 +27,78 @@ class DraggableEmoji extends StatefulWidget {
   });
 
   @override
-  State<DraggableEmoji> createState() => _DraggableEmojiState();
+  State<DraggableShape> createState() => _DraggableShapeState();
 }
 
-class _DraggableEmojiState extends State<DraggableEmoji> {
+class _DraggableShapeState extends State<DraggableShape> {
   bool _selected = false;
+
+  Rect get _bounds {
+    final s = widget.item.start + widget.item.offset;
+    final e = widget.item.end + widget.item.offset;
+    return Rect.fromPoints(s, e);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final bounds = _bounds;
+    const padding = 16.0;
+
     return Positioned(
-      left: widget.item.position.dx - 24,
-      top: widget.item.position.dy - 24,
+      left: bounds.left - padding,
+      top: bounds.top - padding,
       child: GestureDetector(
         onTap: () => setState(() => _selected = !_selected),
         onPanUpdate: widget.locked
             ? null
             : (d) => widget.onMove(
                 Offset(
-                  widget.item.position.dx + d.delta.dx,
-                  widget.item.position.dy + d.delta.dy,
+                  widget.item.offset.dx + d.delta.dx,
+                  widget.item.offset.dy + d.delta.dy,
                 ),
               ),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            // ── Emoji ──
             Container(
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: _selected
-                      ? kOrange
-                      : widget.locked
-                      ? Colors.blue
-                      : Colors.transparent,
-                  width: 1.5,
+              width: bounds.width + padding * 2,
+              height: bounds.height + padding * 2,
+              decoration: (_selected || widget.locked)
+                  ? BoxDecoration(
+                      border: Border.all(
+                        color: _selected ? kOrange : Colors.blue,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(4),
+                    )
+                  : null,
+              child: CustomPaint(
+                painter: _SingleShapePainter(
+                  item: widget.item,
+                  padding: padding,
                 ),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(
-                widget.item.emoji,
-                style: const TextStyle(fontSize: 36),
               ),
             ),
 
-            // ── Lock badge ──
             if (widget.locked)
               Positioned(
-                right: 0,
-                bottom: 0,
+                left: padding + 4,
+                bottom: padding + 4,
                 child: Container(
-                  padding: const EdgeInsets.all(2),
+                  padding: const EdgeInsets.all(3),
                   decoration: BoxDecoration(
                     color: Colors.blue.withOpacity(0.85),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.lock, color: Colors.white, size: 10),
+                  child: const Icon(Icons.lock, color: Colors.white, size: 12),
                 ),
               ),
 
             if (_selected) ...[
               // Delete — top left
               Positioned(
-                left: -8,
-                top: -8,
+                left: 0,
+                top: 0,
                 child: _CtrlBtn(
                   icon: Icons.close,
                   color: Colors.red,
@@ -98,8 +107,8 @@ class _DraggableEmojiState extends State<DraggableEmoji> {
               ),
               // Bring to front — top right
               Positioned(
-                right: -8,
-                top: -8,
+                right: 0,
+                top: 0,
                 child: _CtrlBtn(
                   icon: Icons.flip_to_front,
                   color: kOrange,
@@ -111,8 +120,8 @@ class _DraggableEmojiState extends State<DraggableEmoji> {
               ),
               // Duplicate — bottom left
               Positioned(
-                left: -8,
-                bottom: -8,
+                left: 0,
+                bottom: 0,
                 child: _CtrlBtn(
                   icon: Icons.copy,
                   color: Colors.green,
@@ -124,8 +133,8 @@ class _DraggableEmojiState extends State<DraggableEmoji> {
               ),
               // Lock — bottom right
               Positioned(
-                right: -8,
-                bottom: -8,
+                right: 0,
+                bottom: 0,
                 child: _CtrlBtn(
                   icon: widget.locked ? Icons.lock_open : Icons.lock,
                   color: Colors.blue,
@@ -147,7 +156,6 @@ class _CtrlBtn extends StatelessWidget {
   final IconData icon;
   final Color color;
   final VoidCallback onTap;
-
   const _CtrlBtn({
     required this.icon,
     required this.color,
@@ -172,4 +180,50 @@ class _CtrlBtn extends StatelessWidget {
       ),
     );
   }
+}
+
+class _SingleShapePainter extends CustomPainter {
+  final ShapeItem item;
+  final double padding;
+  _SingleShapePainter({required this.item, required this.padding});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = item.color
+      ..strokeWidth = item.strokeWidth
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    final s = item.start + item.offset;
+    final e = item.end + item.offset;
+    final bounds = Rect.fromPoints(s, e);
+    canvas.save();
+    canvas.translate(-bounds.left + padding, -bounds.top + padding);
+    final rect = Rect.fromPoints(s, e);
+
+    switch (item.type) {
+      case ShapeType.rectangle:
+        canvas.drawRect(rect, paint);
+        break;
+      case ShapeType.circle:
+        canvas.drawOval(rect, paint);
+        break;
+      case ShapeType.line:
+        canvas.drawLine(s, e, paint);
+        break;
+      case ShapeType.triangle:
+        final path = Path()
+          ..moveTo((s.dx + e.dx) / 2, s.dy)
+          ..lineTo(e.dx, e.dy)
+          ..lineTo(s.dx, e.dy)
+          ..close();
+        canvas.drawPath(path, paint);
+        break;
+    }
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(_SingleShapePainter old) => true;
 }
