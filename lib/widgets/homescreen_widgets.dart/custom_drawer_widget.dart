@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -24,41 +26,41 @@ class _CustomDrawerState extends State<CustomDrawer> {
       backgroundColor: const Color(0xff2b2b2b),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               /// PROFILE SECTION
               Row(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 22,
-                    backgroundImage: AssetImage("assets/avatar.png"),
+                    backgroundImage: AssetImage(AppConstants.User),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10.w),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
                         "CODEXDEV",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppConstants.Secondary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 2),
+                      SizedBox(height: 2.h),
                       Text(
                         "650ae27d...",
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                        style: TextStyle(color: Colors.grey, fontSize: 12.sp),
                       ),
                     ],
                   ),
-                  const Spacer(),
-                  const Icon(Icons.copy, color: Colors.grey, size: 18),
+                  Spacer(),
+                  Icon(Icons.copy, color: Colors.grey, size: 18.sp),
                 ],
               ),
 
-              const SizedBox(height: 50),
+              SizedBox(height: 50.h),
 
               ...List.generate(menuItems.length, (index) {
                 bool isActive = activeIndex == index;
@@ -77,21 +79,23 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         Text(
                           menuItems[index],
                           style: TextStyle(
-                            color: isActive ? Colors.white : Colors.grey,
+                            color: isActive
+                                ? AppConstants.Secondary
+                                : Colors.grey,
                             fontWeight: isActive
                                 ? FontWeight.bold
                                 : FontWeight.normal,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             letterSpacing: 1,
                           ),
                         ),
-                        const SizedBox(height: 6),
+                        SizedBox(height: 6.h),
                         if (isActive)
                           Container(
-                            height: 3,
-                            width: 35,
+                            height: 3.h,
+                            width: 35.w,
                             decoration: BoxDecoration(
-                              color: Colors.orange,
+                              color: AppConstants.Primary,
                               borderRadius: BorderRadius.circular(2),
                             ),
                           ),

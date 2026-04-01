@@ -1,14 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nft_create/constants/const.dart';
-import 'package:nft_create/view/wallet_screens/createwallet_screen.dart';
+import 'package:nft_create/view/notification_screen.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/homescreen_widgets.dart/custom_drawer_widget.dart';
 import 'package:nft_create/widgets/homescreen_widgets.dart/nft_card_widget.dart';
 import 'package:nft_create/widgets/homescreen_widgets.dart/tabs.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final List<Map<String, String>> nftList = [
+    {
+      "nftimage": AppConstants.Image1,
+      "nfttext": "Stylish Monkey",
+      "userimage": AppConstants.User,
+      "username": "Waris",
+      "balance": "500\$",
+    },
+    {
+      "nftimage": AppConstants.Image2,
+      "nfttext": "Dell Laptop",
+      "userimage": AppConstants.User,
+      "username": "Danyal",
+      "balance": "550\$",
+    },
+    {
+      "nftimage": AppConstants.Image3,
+      "nfttext": "HP Laptop",
+      "userimage": AppConstants.User,
+      "username": "Danyal",
+      "balance": "550\$",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +44,11 @@ class HomeScreen extends StatelessWidget {
 
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 30.h),
+                SizedBox(height: 10.h),
 
                 /// TOP BAR
                 Row(
@@ -31,10 +56,13 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Builder(
                       builder: (context) => IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: AppConstants.Primary,
-                          size: 28,
+                        icon: Transform.scale(
+                          scaleY: -1,
+                          child: FaIcon(
+                            FontAwesomeIcons.alignLeft,
+                            color: AppConstants.Primary,
+                            size: 28,
+                          ),
                         ),
                         onPressed: () {
                           Scaffold.of(context).openDrawer(); // Now safe
@@ -51,21 +79,46 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Stack(
                       children: [
-                        Icon(
-                          Icons.notifications_none,
-                          color: AppConstants.Primary,
-                          size: 28,
+                        IconButton(
+                          icon: Icon(
+                            Icons.notifications_none,
+                            color: AppConstants.Primary,
+                            size: 25,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NotificationScreen(),
+                              ),
+                            );
+                          },
                         ),
                         Positioned(
-                          right: 2,
-                          top: 2,
+                          right: 15,
+                          top: 15,
                           child: CircleAvatar(
-                            radius: 5,
+                            radius: 4,
                             backgroundColor: Colors.red,
                           ),
                         ),
                       ],
                     ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => NotificationScreen(),
+                    //       ),
+                    //     );
+                    //   },
+                    //   child: Image(
+                    //     image: AssetImage(AppConstants.Notification),
+                    //     height: 28.h,
+                    //     width: 28.w,
+                    //   ),
+                    // ),
                   ],
                 ),
 
@@ -74,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                 /// SEARCH BAR
                 Center(
                   child: Container(
-                    height: 44,
+                    height: 44.h,
                     width: 310.w,
                     padding: EdgeInsets.symmetric(horizontal: 8.w),
                     decoration: BoxDecoration(
@@ -101,19 +154,31 @@ class HomeScreen extends StatelessWidget {
 
                 SizedBox(height: 20.h),
 
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    childAspectRatio: 170 / 280,
+                SizedBox(
+                  height: 280.h,
+                  // width: double.infinity,
+                  child: GridView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    // physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      mainAxisExtent: 180.h,
+                      mainAxisSpacing: 12,
+                      crossAxisSpacing: 12,
+                      childAspectRatio: 170 / 280,
+                    ),
+                    itemCount: nftList.length,
+                    itemBuilder: (context, index) {
+                      return NFTCard(
+                        nftimage: nftList[index]["nftimage"]!,
+                        nfttext: nftList[index]["nfttext"]!,
+                        userimage: nftList[index]["userimage"]!,
+                        username: nftList[index]["username"]!,
+                        balance: nftList[index]["balance"]!,
+                      );
+                    },
                   ),
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    return const NFTCard();
-                  },
                 ),
 
                 SizedBox(height: 25.h),
@@ -209,15 +274,7 @@ class HomeScreen extends StatelessWidget {
                                   alignment: Alignment
                                       .bottomRight, // ← This pushes button to bottom right
                                   child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              CreatewalletScreen(),
-                                        ),
-                                      );
-                                    },
+                                    onTap: () {},
                                     borderRadius: BorderRadius.circular(8),
                                     child: Container(
                                       padding: EdgeInsets.symmetric(

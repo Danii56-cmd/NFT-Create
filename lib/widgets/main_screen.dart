@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nft_create/constants/const.dart';
 import 'package:nft_create/view/create_screens.dart';
 import 'package:nft_create/view/homescreen.dart';
 import 'package:nft_create/view/market_screen.dart';
@@ -16,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   int selectedIndex = 0;
 
   final List<Widget> screens = [
-    const HomeScreen(),
+    HomeScreen(),
     CreateScreens(),
     MarketScreen(),
     WalletScreen(),
@@ -34,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(30.r),
-          border: Border.all(color: Colors.orange),
+          border: Border.all(color: AppConstants.Primary),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -92,13 +93,13 @@ class BottomIcon extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            backgroundColor: Colors.orange,
-            child: Icon(icon, color: Colors.white),
+            backgroundColor: AppConstants.Primary,
+            child: Icon(icon, color: AppConstants.Secondary),
           ),
           SizedBox(height: 5.h),
           Text(
             label,
-            style: TextStyle(color: Colors.orange, fontSize: 12.sp),
+            style: TextStyle(color: AppConstants.Primary, fontSize: 12.sp),
           ),
         ],
       ),
