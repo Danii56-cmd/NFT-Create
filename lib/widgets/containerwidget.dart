@@ -10,10 +10,10 @@ class containerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 7.0),
+      padding: const EdgeInsets.all(5.0),
       child: Container(
-        height: 85.h,
-        width: 80.w,
+        height: 75.h,
+        width: 78.w,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),
           color: Colors.transparent,

@@ -16,4 +16,5 @@ class AppConstants {
   static String Balancechart = "assets/images/balancechart.png";
   // static String History = "assets/images/history.png";
   static String Wallet = "assets/images/walleticon.png";
+  // static String Notification = "assets/images/notification.png";
 }

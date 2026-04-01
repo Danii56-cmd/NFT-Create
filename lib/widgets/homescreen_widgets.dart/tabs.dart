@@ -35,20 +35,20 @@ class _CustomTabsState extends State<CustomTabs> {
                   Text(
                     tabList[index],
                     style: TextStyle(
-                      color: isActive ? Colors.orange : Colors.grey,
+                      color: isActive ? AppConstants.Primary : Colors.grey,
                       fontWeight: isActive
                           ? FontWeight.bold
                           : FontWeight.normal,
                       fontSize: 15.sp,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   if (isActive)
                     Container(
-                      height: 3,
+                      height: 3.h,
                       width: 35.w,
                       decoration: BoxDecoration(
-                        color: Colors.orange,
+                        color: AppConstants.Primary,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),

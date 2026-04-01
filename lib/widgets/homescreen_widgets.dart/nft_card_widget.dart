@@ -3,7 +3,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nft_create/constants/const.dart';
 
 class NFTCard extends StatelessWidget {
-  const NFTCard({super.key});
+  final String nftimage;
+  final String nfttext;
+  final String userimage;
+  final String username;
+  final String balance;
+  const NFTCard({
+    super.key,
+    required this.nftimage,
+    required this.nfttext,
+    required this.userimage,
+    required this.username,
+    required this.balance,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +42,10 @@ class NFTCard extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image.network(
-                    height: 120,
-                    width: 150.w,
-                    "https://i.imgur.com/BoN9kdC.png",
+                  child: Image(
+                    // height: 10,
+                    width: 180.w,
+                    image: AssetImage(nftimage),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -79,7 +91,7 @@ class NFTCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Stylish Monkey",
+                nfttext,
                 style: TextStyle(
                   color: AppConstants.Secondary,
                   fontWeight: FontWeight.bold,
@@ -114,14 +126,14 @@ class NFTCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
-                        image: NetworkImage("https://i.pravatar.cc/150?img=3"),
+                        image: AssetImage(userimage),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   SizedBox(width: 5.w),
                   Text(
-                    "Jhon Wick",
+                    username,
                     style: TextStyle(color: Colors.grey, fontSize: 8.sp),
                   ),
                 ],
@@ -129,7 +141,7 @@ class NFTCard extends StatelessWidget {
 
               /// PRICE
               Text(
-                "549\$",
+                balance,
                 style: TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,

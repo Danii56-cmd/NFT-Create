@@ -3,10 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nft_create/constants/const.dart';
 // import 'package:nft_create/view/auth_screens.dart/forgot_pass_screen.dart';
 import 'package:nft_create/view/auth_screens.dart/signup_screen.dart';
-import 'package:nft_create/view/homescreen.dart';
+// import 'package:nft_create/view/homescreen.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
 import 'package:nft_create/widgets/customtextformfield.dart';
+import 'package:nft_create/widgets/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -141,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        MaterialPageRoute(builder: (context) => MainScreen()),
                       );
                     },
                     height: 60.h,
