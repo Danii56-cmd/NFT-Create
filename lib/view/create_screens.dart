@@ -443,8 +443,6 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
                 ],
               ),
             ),
-            // ── Bottom Nav ──
-            _buildBottomNav(),
           ],
         ),
       ),
@@ -585,59 +583,6 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
           shape: BoxShape.circle,
           border: Border.all(color: Colors.white, width: 2),
         ),
-      ),
-    );
-  }
-
-  Widget _buildBottomNav() {
-    final items = [
-      {'icon': Icons.home_rounded, 'label': 'HOME'},
-      {'icon': Icons.add_box_outlined, 'label': 'CREATE NFT'},
-      {'icon': Icons.show_chart, 'label': 'MARKET'},
-      {'icon': Icons.account_balance_wallet_outlined, 'label': 'WALLET'},
-    ];
-    return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
-      decoration: BoxDecoration(
-        color: kPanel,
-        borderRadius: BorderRadius.circular(28),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(items.length, (i) {
-          final sel = _navIndex == i;
-          return GestureDetector(
-            onTap: () => setState(() => _navIndex = i),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-              decoration: BoxDecoration(
-                color: sel ? kOrange : Colors.transparent,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    items[i]['icon'] as IconData,
-                    color: sel ? Colors.white : Colors.grey,
-                    size: 20,
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    items[i]['label'] as String,
-                    style: TextStyle(
-                      color: sel ? Colors.white : Colors.grey,
-                      fontSize: 8,
-                      fontWeight: sel ? FontWeight.bold : FontWeight.normal,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }),
       ),
     );
   }

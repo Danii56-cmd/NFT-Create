@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nft_create/enums.dart';
-import 'package:nft_create/view/create_screens.dart';
 
 class ShapeItem {
   final ShapeType type;
