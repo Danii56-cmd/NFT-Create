@@ -7,6 +7,8 @@ class MarketScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black38,
+
       body: AppBackground(child: Column(children: [Text('Market screen')])),
     );
   }
