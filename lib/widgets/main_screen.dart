@@ -5,7 +5,6 @@ import 'package:nft_create/view/create_screens.dart';
 import 'package:nft_create/view/homescreen.dart';
 import 'package:nft_create/view/market_screen.dart';
 import 'package:nft_create/view/wallet_screens/createwallet_screen.dart';
-import 'package:nft_create/view/wallet_screens/mywallet_screen.dart';
 import 'package:nft_create/widgets/app_background.dart';
 
 class MainScreen extends StatefulWidget {
