@@ -14,7 +14,7 @@ class containerWidget extends StatelessWidget {
       child: Container(
         height: 75.h,
         width: 78.w,
-        decoration: BoxDecoration(
+        decoration: BoxDecoration( 
           borderRadius: BorderRadius.circular(10.r),
           color: Colors.transparent,
           border: Border.all(color: AppConstants.Primary),

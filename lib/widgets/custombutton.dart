@@ -26,21 +26,25 @@ class Custombutton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.orange[700],
+          backgroundColor: AppConstants.Primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.r),
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: icon != null
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.center,
           children: [
-            // SizedBox(width: 17.w),
-            Text(
-              text,
-              style: TextStyle(
-                color: AppConstants.Secondary,
-                fontSize: 15.sp,
-                fontWeight: FontWeight.bold,
+            icon != null ? SizedBox(width: 17.w) : SizedBox.shrink(),
+            Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: AppConstants.Secondary,
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             if (icon != null) icon! else SizedBox.shrink(),
