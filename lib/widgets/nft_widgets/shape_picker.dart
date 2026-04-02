@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nft_create/enums.dart';
-import 'package:nft_create/view/create_screens.dart';
 
 const kOrange = Color(0xFFF5A623);
 

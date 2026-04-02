@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nft_create/enums.dart';
 import 'package:nft_create/models/drawing_point.dart';
 import 'package:nft_create/models/shape_item.dart';
-import 'package:nft_create/view/create_screens.dart' hide DrawingPoint;
 
 class DrawingPainter extends CustomPainter {
   final List<List<DrawingPoint?>> strokes;

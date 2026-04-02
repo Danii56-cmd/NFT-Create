@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nft_create/enums.dart';
 import 'package:nft_create/models/canvas_item.dart';
@@ -652,7 +651,7 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
                       child: ShapePickerPanel(
                         selected: _shapeType,
                         onSelect: (s) => setState(() {
-                          _shapeType = s as ShapeType;
+                          _shapeType = s;
                           _tool = DrawingTool.shapes;
                           _showShapePicker = false;
                         }),
