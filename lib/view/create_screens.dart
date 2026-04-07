@@ -1,6 +1,10 @@
-// lib/view/nft_creator_screen.dart
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:gal/gal.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:nft_create/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:nft_create/enums.dart';
 import 'package:nft_create/models/canvas_item.dart';
@@ -30,6 +34,155 @@ class NFTCreatorScreen extends StatelessWidget {
   NFTCreatorScreen({super.key});
 
   final GlobalKey _canvasKey = GlobalKey();
+
+  // ── Save to Gallery ───────────────────────────
+  Future<void> _saveToGallery(BuildContext context) async {
+    final result = await _showNftInfoDialog(context);
+    if (result == null) return;
+
+    try {
+      final boundary =
+          _canvasKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
+      final image = await boundary.toImage(pixelRatio: 3.0);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      final bytes = byteData!.buffer.asUint8List();
+
+      await Gal.putImageBytes(
+        bytes,
+        name: 'nft_${DateTime.now().millisecondsSinceEpoch}.png',
+      );
+
+      final userId = await AuthService().getCurrentUserId() ?? 'guest';
+      final boxName = 'nfts_$userId';
+      final box = await Hive.openBox(boxName);
+
+      await box.put(DateTime.now().millisecondsSinceEpoch.toString(), {
+        'bytes': bytes,
+        'date': DateTime.now().toIso8601String(),
+        'title': result['title'],
+        'description': result['description'],
+        'price': result['price'],
+        'creator': result['creator'],
+      });
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: kOrange,
+            content: Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 8),
+                Text('NFT saved!', style: TextStyle(color: Colors.white)),
+              ],
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed: $e'), backgroundColor: Colors.red),
+        );
+      }
+    }
+  }
+
+  // ── NFT Info Dialog ───────────────────────────
+  Future<Map<String, String>?> _showNftInfoDialog(BuildContext context) {
+    final titleC = TextEditingController();
+    final descC = TextEditingController();
+    final priceC = TextEditingController();
+    final creatorC = TextEditingController();
+
+    return showDialog<Map<String, String>>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF333333),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          '🎨 Save NFT',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _dialogField(titleC, 'NFT Title *', Icons.title),
+              const SizedBox(height: 12),
+              _dialogField(
+                descC,
+                'Description',
+                Icons.description,
+                maxLines: 3,
+              ),
+              const SizedBox(height: 12),
+              _dialogField(
+                priceC,
+                'Price (e.g. 0.5 ETH)',
+                Icons.attach_money,
+                inputType: TextInputType.number,
+              ),
+              const SizedBox(height: 12),
+              _dialogField(creatorC, 'Your Name', Icons.person),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, null),
+            child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kOrange,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              if (titleC.text.trim().isEmpty) return;
+              Navigator.pop(ctx, {
+                'title': titleC.text.trim(),
+                'description': descC.text.trim(),
+                'price': priceC.text.trim(),
+                'creator': creatorC.text.trim(),
+              });
+            },
+            child: const Text('Save', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ── Dialog Field Helper ───────────────────────
+  Widget _dialogField(
+    TextEditingController controller,
+    String hint,
+    IconData icon, {
+    int maxLines = 1,
+    TextInputType inputType = TextInputType.text,
+  }) {
+    return TextField(
+      controller: controller,
+      maxLines: maxLines,
+      keyboardType: inputType,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: const TextStyle(color: Colors.grey),
+        prefixIcon: Icon(icon, color: kOrange, size: 18),
+        filled: true,
+        fillColor: Colors.white10,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -395,6 +548,11 @@ class NFTCreatorScreen extends StatelessWidget {
               onTap: () => p.togglePenStylePicker(),
             ),
             _toolBtn(
+              Icons.save_alt,
+              'Save to Gallery',
+              onTap: () => _saveToGallery(context),
+            ),
+            _toolBtn(
               Icons.close,
               'Erase',
               active: p.tool == DrawingTool.eraser,
@@ -404,7 +562,6 @@ class NFTCreatorScreen extends StatelessWidget {
                     : DrawingTool.eraser,
               ),
             ),
-            // Color dot
             GestureDetector(
               onTap: () => p.toggleColorPicker(),
               child: Container(

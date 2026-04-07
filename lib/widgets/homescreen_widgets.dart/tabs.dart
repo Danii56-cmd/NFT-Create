@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nft_create/constants/const.dart';
+import 'package:nft_create/view/my_nft_screen.dart';
 
 class CustomTabs extends StatefulWidget {
   const CustomTabs({super.key});
@@ -27,6 +28,12 @@ class _CustomTabsState extends State<CustomTabs> {
               setState(() {
                 selectedIndex = index;
               });
+              if (tabList[index] == "My NFTs") {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const MyNftsScreen()),
+                );
+              }
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.h),

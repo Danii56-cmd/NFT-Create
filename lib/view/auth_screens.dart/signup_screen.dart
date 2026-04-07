@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:nft_create/constants/const.dart';
-import 'package:nft_create/view/auth_screens.dart/otp_screens/otp_screen1.dart';
+import 'package:nft_create/services/auth_service.dart';
+import 'package:nft_create/view/homescreen.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
 import 'package:nft_create/widgets/customtextformfield.dart';
+import 'package:nft_create/widgets/main_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -16,6 +17,41 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   bool _obscurePassword = true;
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _authService = AuthService();
+
+  bool _isLoading = false;
+
+  Future<void> _handleSignup() async {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Please fill all fields")));
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    bool success = await _authService.register(
+      _emailController.text.trim(),
+      _passwordController.text,
+    );
+
+    setState(() => _isLoading = false);
+
+    if (success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("User already exists! Please login.")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,81 +70,27 @@ class _SignupScreenState extends State<SignupScreen> {
                     "NFT",
                     style: TextStyle(
                       color: AppConstants.Secondary,
-                      fontSize: 50.0.sp,
+                      fontSize: 50.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 20.0.h),
+                  SizedBox(height: 30.h),
 
                   CustomTextFormField(
+                    controller: _emailController,
                     hintText: "Enter your email",
                     prefixIcon: Icon(
                       Icons.email,
                       color: AppConstants.Primary,
                       size: 20.sp,
                     ),
-                    suffixIcon: const SizedBox.shrink(),
                     keyboardType: TextInputType.emailAddress,
                   ),
 
-                  SizedBox(height: 20.0.h),
-
-                  Stack(
-                    alignment: Alignment.centerRight,
-                    children: [
-                      IntlPhoneField(
-                        textAlign: TextAlign.center,
-                        cursorColor: AppConstants.Primary,
-                        initialCountryCode: 'PK',
-                        style: TextStyle(
-                          color: AppConstants.Secondary,
-                          fontSize: 12.sp,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Mobile number',
-                          hintStyle: TextStyle(
-                            color: AppConstants.Secondary,
-                            fontSize: 12.sp,
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: 12.h,
-                            horizontal: 100.w,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: AppConstants.Primary,
-                              width: 2.w,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: AppConstants.Primary,
-                              width: 2.w,
-                            ),
-                          ),
-                        ),
-                        dropdownIcon: Icon(
-                          Icons.arrow_drop_down,
-                          color: AppConstants.Primary,
-                        ),
-                        onChanged: (phone) {},
-                      ),
-                      Positioned(
-                        right: 10,
-                        child: Container(
-                          width: 20,
-                          height: 20,
-                          color: Colors.transparent, // dummy icon space
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 10.0.h),
+                  SizedBox(height: 20.h),
 
                   CustomTextFormField(
+                    controller: _passwordController,
                     hintText: "Enter your password",
                     prefixIcon: Icon(
                       Icons.lock,
@@ -121,17 +103,39 @@ class _SignupScreenState extends State<SignupScreen> {
                             ? Icons.visibility
                             : Icons.visibility_off,
                         color: AppConstants.Primary,
-                        size: 20.sp,
                       ),
                       onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
+                        setState(() => _obscurePassword = !_obscurePassword);
                       },
                     ),
                     obscureText: _obscurePassword,
                   ),
-                  SizedBox(height: 30.0.h),
+
+                  SizedBox(height: 40.h),
+
+                  Custombutton(
+                    text: _isLoading ? "Creating Account..." : "Signup",
+                    onPressed: _handleSignup,
+                    height: 60.h,
+                    width: 370.w,
+                    icon: _isLoading
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Icon(
+                            Icons.arrow_forward_ios,
+                            color: AppConstants.Secondary,
+                            size: 20.sp,
+                          ),
+                  ),
+
+                  SizedBox(height: 30.h),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -143,9 +147,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
+                        onTap: () => Navigator.pop(context),
                         child: Text(
                           "Login",
                           style: TextStyle(
@@ -157,98 +159,6 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30.0.h),
-                  // ── Fixed: Use Custombutton here ──
-                  Custombutton(
-                    text: "Signup",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => OTPScreen1()),
-                      );
-                    },
-                    height: 60.h,
-                    width: 370.w,
-                    icon: Icon(
-                      Icons.arrow_forward_ios,
-                      color: AppConstants.Secondary,
-                      size: 20.sp,
-                    ),
-                  ),
-
-                  SizedBox(height: 20.0.h),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 3.r,
-                        backgroundColor: AppConstants.Primary,
-                      ),
-                      Container(
-                        width: 100.w,
-                        height: 2.h,
-                        color: AppConstants.Primary,
-                      ),
-                      SizedBox(width: 20.0.w),
-                      Text(
-                        "or signup with",
-                        style: TextStyle(
-                          color: AppConstants.Secondary,
-                          fontSize: 14.sp,
-                        ),
-                      ),
-                      SizedBox(width: 20.0.w),
-                      Container(
-                        width: 92.w,
-                        height: 02.h,
-
-                        color: AppConstants.Primary,
-                      ),
-                      CircleAvatar(
-                        radius: 3.r,
-                        backgroundColor: AppConstants.Primary,
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 30.0.h),
-
-                  SizedBox(
-                    height: 60.0.h,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppConstants.Secondary,
-                        foregroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          side: BorderSide(
-                            color: AppConstants.Primary,
-                            width: 1.0.w,
-                          ),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image(
-                            image: AssetImage("assets/images/google.png"),
-                            height: 20.h,
-                            width: 20.w,
-                          ),
-                          SizedBox(width: 16.w),
-                          Text(
-                            "Signup with Google",
-                            style: TextStyle(fontSize: 14.sp),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 40.0.h),
                 ],
               ),
             ),

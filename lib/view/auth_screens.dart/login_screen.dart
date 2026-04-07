@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nft_create/constants/const.dart';
-// import 'package:nft_create/view/auth_screens.dart/forgot_pass_screen.dart';
+import 'package:nft_create/services/auth_service.dart';
 import 'package:nft_create/view/auth_screens.dart/signup_screen.dart';
-// import 'package:nft_create/view/homescreen.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
 import 'package:nft_create/widgets/customtextformfield.dart';
-import 'package:nft_create/widgets/main_screen.dart';
+import 'package:nft_create/widgets/main_screen.dart'; // Your MainScreen
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,6 +17,44 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
+  bool _isLoading = false;
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _authService = AuthService();
+
+  Future<void> _handleLogin() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter email and password")),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    bool success = await _authService.login(email, password);
+
+    setState(() => _isLoading = false);
+
+    if (success) {
+      // Navigate to Main Screen after successful login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MainScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Invalid email or password"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,19 +77,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 20.0.h),
+                  SizedBox(height: 30.h),
+
+                  // Email Field
                   CustomTextFormField(
+                    controller: _emailController,
                     hintText: "Enter your email",
                     prefixIcon: Icon(
                       Icons.email,
                       color: AppConstants.Primary,
                       size: 20.sp,
                     ),
-                    suffixIcon: const SizedBox.shrink(),
                     keyboardType: TextInputType.emailAddress,
                   ),
-                  SizedBox(height: 20.0.h),
+
+                  SizedBox(height: 20.h),
+
+                  // Password Field
                   CustomTextFormField(
+                    controller: _passwordController,
                     hintText: "Enter your password",
                     prefixIcon: Icon(
                       Icons.lock,
@@ -68,42 +111,65 @@ class _LoginScreenState extends State<LoginScreen> {
                         size: 20.sp,
                       ),
                       onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
+                        setState(() => _obscurePassword = !_obscurePassword);
                       },
                     ),
                     obscureText: _obscurePassword,
                   ),
-                  SizedBox(height: 10.0.h),
+
+                  SizedBox(height: 10.h),
+
+                  // Forgot Password
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 05.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         ForgotPasswordScreen1(otp: ''),
-                            //   ),
-                            // );
-                          },
-
-                          child: Text(
-                            "Forgot the password?",
-                            style: TextStyle(
-                              color: AppConstants.Secondary,
-                              fontSize: 10.sp,
+                      GestureDetector(
+                        onTap: () {
+                          // TODO: Add forgot password logic later
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Forgot password coming soon"),
                             ),
+                          );
+                        },
+                        child: Text(
+                          "Forgot the password?",
+                          style: TextStyle(
+                            color: AppConstants.Secondary,
+                            fontSize: 10.sp,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 60.0.h),
+
+                  SizedBox(height: 50.h),
+
+                  // Login Button
+                  Custombutton(
+                    text: _isLoading ? "Logging in..." : "Login",
+                    onPressed: _handleLogin,
+                    height: 60.h,
+                    width: 370.w,
+                    icon: _isLoading
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Icon(
+                            Icons.arrow_forward_ios,
+                            color: AppConstants.Secondary,
+                            size: 20.sp,
+                          ),
+                  ),
+
+                  SizedBox(height: 30.h),
+
+                  // Sign Up Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -119,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SignupScreen(),
+                              builder: (context) => const SignupScreen(),
                             ),
                           );
                         },
@@ -134,53 +200,47 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30.0.h),
 
-                  // lib/view/login_screen/login_screen.dart
-                  Custombutton(
-                    text: "Login",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MainScreen()),
-                      );
-                    },
-                    height: 60.h,
-                    width: 370.w,
-                    icon: Icon(
-                      Icons.arrow_forward_ios,
-                      color: AppConstants.Secondary,
-                    ),
-                  ),
-                  SizedBox(height: 20.0.h),
+                  SizedBox(height: 40.h),
+
+                  // Google Login Button
                   SizedBox(
-                    height: 60.0.h,
+                    height: 60.h,
+                    width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // TODO: Add Google Sign-In later
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Google Sign-In coming soon"),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppConstants.Secondary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.r),
                           side: BorderSide(
                             color: AppConstants.Primary,
-                            width: 1.0.w,
+                            width: 1.w,
                           ),
                         ),
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image(
                             image: AssetImage(AppConstants.Google),
-                            height: 20.h,
-                            width: 20.w,
+                            height: 22.h,
+                            width: 22.w,
                           ),
-                          SizedBox(width: 75.w),
+                          SizedBox(width: 12.w),
                           Text(
                             "Login with Google",
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 13.sp,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
