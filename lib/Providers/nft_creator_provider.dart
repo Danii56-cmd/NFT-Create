@@ -1,6 +1,7 @@
 // lib/providers/nft_creator_provider.dart
 
 import 'dart:io';
+import 'dart:typed_data'; // ← Added this import
 import 'package:flutter/material.dart';
 import 'package:nft_create/enums.dart';
 import 'package:nft_create/models/canvas_item.dart';
@@ -70,6 +71,27 @@ class NFTCreatorProvider extends ChangeNotifier {
   bool showOpacitySlider = false;
   bool showPenStylePicker = false;
   bool showBgPicker = false;
+
+  void addImageFromBytes(Uint8List bytes, String name) {
+    if (bytes.isEmpty) {
+      print("❌ addImageFromBytes: Received empty bytes");
+      return;
+    }
+
+    final imageItem = ImageItem(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      bytes: bytes, // ← Crucial
+      name: name,
+      position: const Offset(120, 120),
+      scale: 1.0,
+      filter: ImageFilter.none,
+    );
+
+    canvasItems.add(CanvasItem(type: CanvasItemType.image, data: imageItem));
+
+    notifyListeners();
+    print("✅ AI Image added | ${bytes.length} bytes");
+  }
 
   // ─────────────────────────────────────────
   // BACKGROUND DECORATION

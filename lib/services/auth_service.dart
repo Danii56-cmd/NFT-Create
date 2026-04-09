@@ -7,17 +7,15 @@ class AuthService {
   static const String _isLoggedInKey = 'isLoggedIn';
   static const String _emailKey = 'userEmail';
   static const String _passwordHashKey = 'userPasswordHash';
-  static const String _userIdKey = 'userId'; // New: Unique ID per user
+  static const String _userIdKey = 'userId';
 
   final Uuid _uuid = const Uuid();
 
-  // Hash password
   String _hashPassword(String password) {
     var bytes = utf8.encode(password);
     return sha256.convert(bytes).toString();
   }
 
-  // ====================== REGISTER ======================
   Future<bool> register(String email, String password) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -46,7 +44,7 @@ class AuthService {
     }
   }
 
-  // ====================== LOGIN ======================
+  //  LOGIN
   Future<bool> login(String email, String password) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -73,7 +71,7 @@ class AuthService {
     }
   }
 
-  // ====================== CHECK LOGIN STATUS ======================
+  //  CHECK LOGIN STATUS
   Future<bool> isLoggedIn() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -83,7 +81,7 @@ class AuthService {
     }
   }
 
-  // ====================== GET CURRENT USER ID ======================
+  //  GET CURRENT USER ID
   Future<String?> getCurrentUserId() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -93,7 +91,7 @@ class AuthService {
     }
   }
 
-  // ====================== GET CURRENT EMAIL ======================
+  //  GET CURRENT EMAIL
   Future<String?> getCurrentEmail() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -103,18 +101,18 @@ class AuthService {
     }
   }
 
-  // ====================== LOGOUT ======================
+  //  LOGOUT
   Future<void> logout() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_isLoggedInKey, false);
-      // Note: We keep email and userId so user can login again easily
+      //    We keep email and userId so user can login again easily
     } catch (e) {
       print("Logout Error: $e");
     }
   }
 
-  // ====================== CLEAR ALL DATA (For Testing) ======================
+  //  CLEAR ALL DATA (For Testing)
   Future<void> clearAllData() async {
     try {
       final prefs = await SharedPreferences.getInstance();

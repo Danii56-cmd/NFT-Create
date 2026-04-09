@@ -43,11 +43,14 @@ class _DraggableImageState extends State<DraggableImage> {
   static const double _baseSize = 120.0;
   static const double _pad = 14.0;
 
-  // ── Filter → ColorFilter ──
+  // ── Filter → ColorFilter ──────────────────────────────────────────────────
+  // FIX: Return null for 'none' so we never wrap with a no-op ColorFilter.
+  // The old code used ColorFilter.mode(Colors.transparent, BlendMode.src)
+  // which renders the image as a black rectangle.
   ColorFilter? _colorFilter(ImageFilter f) {
     switch (f) {
       case ImageFilter.none:
-        return null;
+        return null; // no wrapper at all — avoids black-image bug
       case ImageFilter.grayscale:
         return const ColorFilter.matrix([
           0.2126,
@@ -143,6 +146,62 @@ class _DraggableImageState extends State<DraggableImage> {
     }
   }
 
+  // ── Build the image widget (file OR bytes) ────────────────────────────────
+  // FIX: Wrap with ColorFiltered only when a filter is actually needed.
+  // Previously the bytes branch always wrapped — even for ImageFilter.none —
+  // with `ColorFilter.mode(Colors.transparent, BlendMode.src)` which
+  // composites the image with transparent black → black rectangle.
+  Widget _buildImage(double size, ColorFilter? cf) {
+    final bytes = widget.item.bytes;
+    final file = widget.item.file;
+
+    Widget raw;
+
+    if (bytes != null && bytes.isNotEmpty) {
+      // AI-generated image stored in memory
+      raw = Image.memory(
+        bytes,
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+        gaplessPlayback: true, // prevents flicker on scale change
+        errorBuilder: (_, error, __) {
+          debugPrint('Image.memory error: $error');
+          return _errorPlaceholder(size);
+        },
+      );
+    } else if (file != null) {
+      // Regular file-picked image
+      raw = Image.file(
+        file,
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+        errorBuilder: (_, error, __) {
+          debugPrint('Image.file error: $error');
+          return _errorPlaceholder(size);
+        },
+      );
+    } else {
+      return _errorPlaceholder(size);
+    }
+
+    // Only wrap with ColorFiltered when a real filter is selected
+    if (cf != null) {
+      return ColorFiltered(colorFilter: cf, child: raw);
+    }
+    return raw;
+  }
+
+  Widget _errorPlaceholder(double size) => Container(
+    width: size,
+    height: size,
+    color: Colors.grey[800],
+    child: const Center(
+      child: Icon(Icons.broken_image, color: Colors.white54, size: 40),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     final size = _baseSize * widget.item.scale;
@@ -153,11 +212,11 @@ class _DraggableImageState extends State<DraggableImage> {
       top: widget.item.position.dy - _pad,
       child: SizedBox(
         width: size + _pad * 2,
-        height: size + _pad * 2 + (_showFilterBar ? 44 : 0),
+        height: size + _pad * 2 + (_showFilterBar && _selected ? 44 : 0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // ── Image + controls ──
+            // ── Image + gesture controls ──────────────────────────────────
             SizedBox(
               width: size + _pad * 2,
               height: size + _pad * 2,
@@ -185,7 +244,7 @@ class _DraggableImageState extends State<DraggableImage> {
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    // Image
+                    // ── Image ─────────────────────────────────────────────
                     Positioned(
                       left: _pad,
                       top: _pad,
@@ -199,37 +258,22 @@ class _DraggableImageState extends State<DraggableImage> {
                               : widget.locked
                               ? Border.all(color: Colors.blue, width: 2)
                               : null,
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.25),
+                              color: Color(0x40000000),
                               blurRadius: 8,
-                              offset: const Offset(0, 3),
+                              offset: Offset(0, 3),
                             ),
                           ],
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: cf != null
-                              ? ColorFiltered(
-                                  colorFilter: cf,
-                                  child: Image.file(
-                                    File(widget.item.file.path),
-                                    width: size,
-                                    height: size,
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              : Image.file(
-                                  File(widget.item.file.path),
-                                  width: size,
-                                  height: size,
-                                  fit: BoxFit.cover,
-                                ),
+                          child: _buildImage(size, cf),
                         ),
                       ),
                     ),
 
-                    // Lock badge
+                    // ── Lock badge ─────────────────────────────────────────
                     if (widget.locked)
                       Positioned(
                         left: _pad + 4,
@@ -248,8 +292,9 @@ class _DraggableImageState extends State<DraggableImage> {
                         ),
                       ),
 
+                    // ── Selection controls ─────────────────────────────────
                     if (_selected) ...[
-                      // Delete — top left
+                      // Delete (top-left)
                       Positioned(
                         top: 0,
                         left: 0,
@@ -259,7 +304,7 @@ class _DraggableImageState extends State<DraggableImage> {
                           onTap: widget.onDelete,
                         ),
                       ),
-                      // Bring to front — top right
+                      // Bring to front (top-right)
                       Positioned(
                         top: 0,
                         right: 0,
@@ -272,7 +317,7 @@ class _DraggableImageState extends State<DraggableImage> {
                           },
                         ),
                       ),
-                      // Duplicate — bottom left
+                      // Duplicate (bottom-left)
                       Positioned(
                         bottom: 0,
                         left: 0,
@@ -285,10 +330,10 @@ class _DraggableImageState extends State<DraggableImage> {
                           },
                         ),
                       ),
-                      // Lock toggle — bottom center-ish
+                      // Lock toggle (bottom-center)
                       Positioned(
                         bottom: 0,
-                        left: size / 2,
+                        left: _pad + size / 2 - 12,
                         child: _CtrlBtn(
                           icon: widget.locked ? Icons.lock_open : Icons.lock,
                           color: Colors.blue,
@@ -298,10 +343,10 @@ class _DraggableImageState extends State<DraggableImage> {
                           },
                         ),
                       ),
-                      // Filter — bottom right (toggle filter bar)
+                      // Filter toggle (bottom-right area)
                       Positioned(
                         bottom: 0,
-                        right: 0,
+                        right: 28, // offset so it doesn't overlap resize handle
                         child: _CtrlBtn(
                           icon: Icons.auto_fix_high,
                           color: Colors.purple,
@@ -309,7 +354,7 @@ class _DraggableImageState extends State<DraggableImage> {
                               setState(() => _showFilterBar = !_showFilterBar),
                         ),
                       ),
-                      // Resize handle
+                      // Resize handle (bottom-right corner)
                       Positioned(
                         bottom: 0,
                         right: 0,
@@ -342,7 +387,7 @@ class _DraggableImageState extends State<DraggableImage> {
               ),
             ),
 
-            // ── Filter bar ──
+            // ── Filter bar ────────────────────────────────────────────────
             if (_selected && _showFilterBar)
               Container(
                 height: 40,
@@ -414,9 +459,7 @@ class _CtrlBtn extends StatelessWidget {
         decoration: BoxDecoration(
           color: color,
           shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 4),
-          ],
+          boxShadow: const [BoxShadow(color: Color(0x4D000000), blurRadius: 4)],
         ),
         child: Icon(icon, color: Colors.white, size: 14),
       ),

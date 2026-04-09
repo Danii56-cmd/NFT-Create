@@ -8,7 +8,7 @@
 // enum PenStyle { pen, pencil, marker, spray }
 // lib/enums.dart
 
-enum DrawingTool { pen, eraser, shapes, text }
+enum DrawingTool { pen, eraser, shapes, text, select }
 
 enum ShapeType { rectangle, circle, line, triangle }
 
