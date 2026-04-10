@@ -1019,6 +1019,7 @@ class _CanvasContent extends StatelessWidget {
             onDuplicate: () => p.duplicate(ci),
             onToggleLock: () => p.toggleLock(ci),
           );
+        // ignore: unreachable_switch_default
         default:
           return const SizedBox.shrink();
       }

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nft_create/constants/const.dart';
 import 'package:nft_create/services/auth_service.dart';
-import 'package:nft_create/view/homescreen.dart';
+import 'package:nft_create/view/auth_screens.dart/login_screen.dart';
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
 import 'package:nft_create/widgets/customtextformfield.dart';
-import 'package:nft_create/widgets/main_screen.dart';
+// import 'package:nft_create/widgets/main_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -44,7 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (success) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MainScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -119,12 +119,12 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 60.h,
                     width: 370.w,
                     icon: _isLoading
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
+                        ? SizedBox(
+                            width: 20.w,
+                            height: 20.h,
                             child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
+                              color: AppConstants.Secondary,
+                              strokeWidth: 2.w,
                             ),
                           )
                         : Icon(

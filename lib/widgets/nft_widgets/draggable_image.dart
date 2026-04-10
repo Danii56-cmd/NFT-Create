@@ -1,6 +1,5 @@
 // lib/widgets/nft_widgets/draggable_image.dart
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nft_create/models/image_item.dart';
 

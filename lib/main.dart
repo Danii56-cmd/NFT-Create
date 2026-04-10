@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:nft_create/services/auth_service.dart';
-import 'package:nft_create/view/auth_screens.dart/login_screen.dart';
+// import 'package:nft_create/view/auth_screens.dart/login_screen.dart';
+import 'package:nft_create/view/onboarding_screens/onboarding_mainscreen.dart';
+// import 'package:nft_create/view/onboarding_screens/splash_screen.dart';
 import 'package:nft_create/widgets/main_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:nft_create/providers/nft_creator_provider.dart';
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'NFT App',
-            home: const AuthWrapper(),
+            home: AuthWrapper(),
           ),
         );
       },
@@ -82,6 +84,6 @@ class _AuthWrapperState extends State<AuthWrapper> {
     }
 
     // Otherwise show Login Screen
-    return const LoginScreen();
+    return const OnboardingMain();
   }
 }
