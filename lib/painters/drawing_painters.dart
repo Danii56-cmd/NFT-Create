@@ -12,7 +12,10 @@ class DrawingPainter extends CustomPainter {
     required this.strokes,
     required this.currentStroke,
     required this.shapes,
+<<<<<<< HEAD
     // required BlendMode blendMode,
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   });
 
   @override

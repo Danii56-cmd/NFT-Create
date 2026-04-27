@@ -1,16 +1,32 @@
+<<<<<<< HEAD
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:nft_create/enums.dart' hide ImageFilter;
+=======
+// lib/providers/nft_creator_provider.dart
+
+import 'dart:io';
+import 'dart:typed_data'; // ← Added this import
+import 'package:flutter/material.dart';
+import 'package:nft_create/enums.dart';
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 import 'package:nft_create/models/canvas_item.dart';
 import 'package:nft_create/models/drawing_point.dart';
 import 'package:nft_create/models/emoji_item.dart';
 import 'package:nft_create/models/image_item.dart';
+<<<<<<< HEAD
 import 'package:nft_create/models/layer_data.dart';
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 import 'package:nft_create/models/shape_item.dart';
 import 'package:nft_create/models/text_item.dart';
 
 class NFTCreatorProvider extends ChangeNotifier {
+<<<<<<< HEAD
+=======
+  // ── Toolbar ───────────────────────────────
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   bool toolbarVisible = false;
 
   void showToolbar() {
@@ -29,21 +45,34 @@ class NFTCreatorProvider extends ChangeNotifier {
   List<List<DrawingPoint?>> undoStack = [];
 
   // ── Tool State ────────────────────────────
+<<<<<<< HEAD
   DrawingTool tool = DrawingTool.none;
+=======
+  DrawingTool tool = DrawingTool.pen;
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   Color strokeColor = Colors.black;
   double strokeWidth = 4.0;
   double strokeOpacity = 1.0;
   PenStyle penStyle = PenStyle.pen;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   // ── Background ────────────────────────────
   Color bgColor = Colors.white;
   Color bgColor2 = const Color(0xFFE0E0E0);
   BgStyle bgStyle = BgStyle.solid;
 
+<<<<<<< HEAD
   // ── Shape
+=======
+  // ── Shape ─────────────────────────────────
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   ShapeType shapeType = ShapeType.rectangle;
   Offset? shapeStart;
   ShapeItem? _activeDrawingShape;
 
+<<<<<<< HEAD
   // ── Emoji
   String? addingEmoji;
 
@@ -57,6 +86,18 @@ class NFTCreatorProvider extends ChangeNotifier {
       .where((item) => item.type == CanvasItemType.shape)
       .map((item) => item.data as ShapeItem)
       .toList();
+=======
+  // ── Emoji ─────────────────────────────────
+  String? addingEmoji;
+
+  // ── Text ──────────────────────────────────
+  Offset textPosition = const Offset(100, 200);
+
+  // ── Layers ────────────────────────────────
+  List<String> layers = ['Layer 1'];
+  int activeLayer = 0;
+
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   // ── Unified Canvas Items ──────────────────
   final List<CanvasItem> canvasItems = [];
 
@@ -74,6 +115,7 @@ class NFTCreatorProvider extends ChangeNotifier {
 
   void addImageFromBytes(Uint8List bytes, String name) {
     if (bytes.isEmpty) {
+<<<<<<< HEAD
       debugPrint('❌ addImageFromBytes: received empty bytes');
       return;
     }
@@ -97,6 +139,25 @@ class NFTCreatorProvider extends ChangeNotifier {
 
     notifyListeners();
     debugPrint('✅ Image added from bytes | ${bytes.length} bytes | $name');
+=======
+      print("❌ addImageFromBytes: Received empty bytes");
+      return;
+    }
+
+    final imageItem = ImageItem(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      bytes: bytes, // ← Crucial
+      name: name,
+      position: const Offset(120, 120),
+      scale: 1.0,
+      filter: ImageFilter.none,
+    );
+
+    canvasItems.add(CanvasItem(type: CanvasItemType.image, data: imageItem));
+
+    notifyListeners();
+    print("✅ AI Image added | ${bytes.length} bytes");
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   }
 
   // ─────────────────────────────────────────
@@ -232,6 +293,10 @@ class NFTCreatorProvider extends ChangeNotifier {
     final c = showColorPicker;
     _closeAllPanels();
     showColorPicker = !c;
+<<<<<<< HEAD
+=======
+    tool = DrawingTool.pen;
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
     notifyListeners();
   }
 
@@ -296,13 +361,19 @@ class NFTCreatorProvider extends ChangeNotifier {
   // ─────────────────────────────────────────
 
   void handleTapDown(Offset position) {
+<<<<<<< HEAD
     // Always show toolbar if it's hidden
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
     if (!toolbarVisible) {
       toolbarVisible = true;
       notifyListeners();
       return;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
     if (addingEmoji != null) {
       canvasItems.add(
         CanvasItem(
@@ -322,18 +393,24 @@ class NFTCreatorProvider extends ChangeNotifier {
   }
 
   void handlePanStart(Offset position) {
+<<<<<<< HEAD
     if (tool != DrawingTool.pen &&
         tool != DrawingTool.eraser &&
         tool != DrawingTool.shapes) {
       return;
     }
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
     if (tool == DrawingTool.shapes) {
       shapeStart = position;
       notifyListeners();
       return;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
     currentStroke = [DrawingPoint(position, makePaint())];
     notifyListeners();
   }
@@ -434,6 +511,7 @@ class NFTCreatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+<<<<<<< HEAD
   void sendToBack(CanvasItem item) {
     canvasItems.remove(item);
     canvasItems.insert(0, item);
@@ -456,6 +534,8 @@ class NFTCreatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   void deleteItem(CanvasItem item) {
     canvasItems.remove(item);
     notifyListeners();
@@ -479,9 +559,13 @@ class NFTCreatorProvider extends ChangeNotifier {
             type: CanvasItemType.image,
             data: ImageItem(
               id: DateTime.now().millisecondsSinceEpoch.toString(),
+<<<<<<< HEAD
               file: img.file, // gallery images: keep the stable file path
               bytes: img.bytes, // ← FIX: camera/AI images: preserve bytes
               name: img.name, // ← FIX: preserve name too
+=======
+              file: img.file,
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
               position: img.position + off,
               scale: img.scale,
               filter: img.filter,
@@ -527,6 +611,10 @@ class NFTCreatorProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   // ─────────────────────────────────────────
   // MOVE / SCALE / FILTER
   // ─────────────────────────────────────────
@@ -563,7 +651,13 @@ class NFTCreatorProvider extends ChangeNotifier {
     }
   }
 
+<<<<<<< HEAD
   // ADD ITEMS
+=======
+  // ─────────────────────────────────────────
+  // ADD ITEMS
+  // ─────────────────────────────────────────
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 
   void selectEmoji(String emoji) {
     addingEmoji = emoji;
@@ -602,10 +696,19 @@ class NFTCreatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+<<<<<<< HEAD
   // LAYER METHODS
 
   void addLayer() {
     layers.add(LayerData(name: 'Layer ${layers.length + 1}'));
+=======
+  // ─────────────────────────────────────────
+  // LAYER METHODS
+  // ─────────────────────────────────────────
+
+  void addLayer() {
+    layers.add('Layer ${layers.length + 1}');
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
     activeLayer = layers.length - 1;
     notifyListeners();
   }
@@ -615,6 +718,7 @@ class NFTCreatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+<<<<<<< HEAD
   void toggleLayerVisibility(int index) {
     layers[index].visible = !layers[index].visible;
     notifyListeners();
@@ -632,6 +736,11 @@ class NFTCreatorProvider extends ChangeNotifier {
     notifyListeners();
   }
   // CLEAR CANVAS
+=======
+  // ─────────────────────────────────────────
+  // CLEAR CANVAS
+  // ─────────────────────────────────────────
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 
   void clearCanvas() {
     strokes.clear();
@@ -642,5 +751,12 @@ class NFTCreatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+<<<<<<< HEAD
+=======
+  // ─────────────────────────────────────────
+  // HELPERS
+  // ─────────────────────────────────────────
+
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   bool get isEmpty => strokes.isEmpty && canvasItems.isEmpty;
 }

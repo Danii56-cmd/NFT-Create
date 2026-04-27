@@ -152,12 +152,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 60.h,
                     width: 370.w,
                     icon: _isLoading
+<<<<<<< HEAD
                         ? const SizedBox(
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
                               color: Colors.white,
                               strokeWidth: 2,
+=======
+                        ? SizedBox(
+                            width: 20.w,
+                            height: 20.h,
+                            child: CircularProgressIndicator(
+                              color: AppConstants.Secondary,
+                              strokeWidth: 2.w,
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
                             ),
                           )
                         : Icon(

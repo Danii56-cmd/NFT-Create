@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nft_create/constants/const.dart';
 import 'package:nft_create/services/auth_service.dart';
+<<<<<<< HEAD
 import 'package:nft_create/widgets/app_background.dart';
 import 'package:nft_create/widgets/custombutton.dart';
 import 'package:nft_create/widgets/customtextformfield.dart';
 import 'package:nft_create/widgets/main_screen.dart';
+=======
+import 'package:nft_create/view/auth_screens.dart/login_screen.dart';
+import 'package:nft_create/widgets/app_background.dart';
+import 'package:nft_create/widgets/custombutton.dart';
+import 'package:nft_create/widgets/customtextformfield.dart';
+// import 'package:nft_create/widgets/main_screen.dart';
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -43,7 +51,11 @@ class _SignupScreenState extends State<SignupScreen> {
     if (success) {
       Navigator.pushReplacement(
         context,
+<<<<<<< HEAD
         MaterialPageRoute(builder: (context) => MainScreen()),
+=======
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -118,12 +130,21 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 60.h,
                     width: 370.w,
                     icon: _isLoading
+<<<<<<< HEAD
                         ? const SizedBox(
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
                               color: Colors.white,
                               strokeWidth: 2,
+=======
+                        ? SizedBox(
+                            width: 20.w,
+                            height: 20.h,
+                            child: CircularProgressIndicator(
+                              color: AppConstants.Secondary,
+                              strokeWidth: 2.w,
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
                             ),
                           )
                         : Icon(

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'package:nft_create/models/emoji_item.dart';
 
@@ -6,11 +7,23 @@ const _kOrange = Color(0xFFF5A623);
 const _kPanel = Color(0xFF1E1E1E);
 const _kWhite10 = Color(0x1AFFFFFF);
 const _kOrange10 = Color(0x1AF5A623);
+=======
+// lib/widgets/nft_widgets/draggable_emoji.dart
+
+import 'package:flutter/material.dart';
+import 'package:nft_create/models/emoji_item.dart';
+
+const kOrange = Color(0xFFF5A623);
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 
 class DraggableEmoji extends StatefulWidget {
   final EmojiItem item;
   final bool locked;
+<<<<<<< HEAD
   final void Function(Offset) onMove;
+=======
+  final ValueChanged<Offset> onMove;
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   final VoidCallback onDelete;
   final VoidCallback onBringToFront;
   final VoidCallback onDuplicate;
@@ -32,6 +45,7 @@ class DraggableEmoji extends StatefulWidget {
 }
 
 class _DraggableEmojiState extends State<DraggableEmoji> {
+<<<<<<< HEAD
   // ── All fields are eagerly initialised — zero `late`, zero dynamic casts ───
   Offset _position = Offset.zero; // set in initState from widget.item
   double _fontSize = 40.0; // local-only; no model change required
@@ -134,11 +148,120 @@ class _DraggableEmojiState extends State<DraggableEmoji> {
 
             // Size slider (only on double-tap)
             if (_showSizeSlider && !widget.locked) _buildSizeSlider(),
+=======
+  bool _selected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: widget.item.position.dx - 24,
+      top: widget.item.position.dy - 24,
+      child: GestureDetector(
+        onTap: () => setState(() => _selected = !_selected),
+        onPanUpdate: widget.locked
+            ? null
+            : (d) => widget.onMove(
+                Offset(
+                  widget.item.position.dx + d.delta.dx,
+                  widget.item.position.dy + d.delta.dy,
+                ),
+              ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // ── Emoji ──
+            Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: _selected
+                      ? kOrange
+                      : widget.locked
+                      ? Colors.blue
+                      : Colors.transparent,
+                  width: 1.5,
+                ),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                widget.item.emoji,
+                style: const TextStyle(fontSize: 36),
+              ),
+            ),
+
+            // ── Lock badge ──
+            if (widget.locked)
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.85),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.lock, color: Colors.white, size: 10),
+                ),
+              ),
+
+            if (_selected) ...[
+              // Delete — top left
+              Positioned(
+                left: -8,
+                top: -8,
+                child: _CtrlBtn(
+                  icon: Icons.close,
+                  color: Colors.red,
+                  onTap: widget.onDelete,
+                ),
+              ),
+              // Bring to front — top right
+              Positioned(
+                right: -8,
+                top: -8,
+                child: _CtrlBtn(
+                  icon: Icons.flip_to_front,
+                  color: kOrange,
+                  onTap: () {
+                    widget.onBringToFront();
+                    setState(() => _selected = false);
+                  },
+                ),
+              ),
+              // Duplicate — bottom left
+              Positioned(
+                left: -8,
+                bottom: -8,
+                child: _CtrlBtn(
+                  icon: Icons.copy,
+                  color: Colors.green,
+                  onTap: () {
+                    widget.onDuplicate();
+                    setState(() => _selected = false);
+                  },
+                ),
+              ),
+              // Lock — bottom right
+              Positioned(
+                right: -8,
+                bottom: -8,
+                child: _CtrlBtn(
+                  icon: widget.locked ? Icons.lock_open : Icons.lock,
+                  color: Colors.blue,
+                  onTap: () {
+                    widget.onToggleLock();
+                    setState(() => _selected = false);
+                  },
+                ),
+              ),
+            ],
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
           ],
         ),
       ),
     );
   }
+<<<<<<< HEAD
 
   // ── Control bar ───────────────────────────────────────────────────────────
   Widget _buildControlBar() {
@@ -312,4 +435,37 @@ class _DraggableEmojiState extends State<DraggableEmoji> {
       style: TextStyle(color: fg, fontSize: 10, fontWeight: FontWeight.bold),
     ),
   );
+=======
+}
+
+class _CtrlBtn extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _CtrlBtn({
+    required this.icon,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 20,
+        height: 20,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 4),
+          ],
+        ),
+        child: Icon(icon, color: Colors.white, size: 12),
+      ),
+    );
+  }
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 }

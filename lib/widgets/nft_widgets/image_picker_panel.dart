@@ -1,11 +1,16 @@
 // lib/widgets/nft_widgets/image_picker_panel.dart
 
 import 'dart:io';
+<<<<<<< HEAD
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:nft_create/providers/nft_creator_provider.dart';
+=======
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 
 const kOrange = Color(0xFFF5A623);
 const kPanel = Color(0xFF1E1E1E);
@@ -20,6 +25,7 @@ class ImagePickerPanel extends StatelessWidget {
     required this.onClose,
   });
 
+<<<<<<< HEAD
   Future<void> _pick(BuildContext context, ImageSource source) async {
     // ── 1. Capture the provider reference BEFORE closing the panel ──────────
     //    Once onClose() fires, this widget is removed from the tree and
@@ -65,6 +71,12 @@ class ImagePickerPanel extends StatelessWidget {
       );
     } else {
       // ── Gallery: file path is stable, use the existing File flow ──────────
+=======
+  Future<void> _pick(ImageSource source) async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: source);
+    if (picked != null) {
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
       onImageSelected(File(picked.path));
     }
   }
@@ -77,12 +89,21 @@ class ImagePickerPanel extends StatelessWidget {
       decoration: BoxDecoration(
         color: kPanel,
         borderRadius: BorderRadius.circular(14),
+<<<<<<< HEAD
         boxShadow: const [BoxShadow(color: Color(0x66000000), blurRadius: 12)],
+=======
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 12),
+        ],
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+<<<<<<< HEAD
           // ── Header ─────────────────────────────────────────────────────────
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -100,6 +121,7 @@ class ImagePickerPanel extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
+<<<<<<< HEAD
 
           // ── Gallery ────────────────────────────────────────────────────────
           _PickerOption(
@@ -114,6 +136,18 @@ class ImagePickerPanel extends StatelessWidget {
             icon: Icons.camera_alt_outlined,
             label: 'Camera',
             onTap: () => _pick(context, ImageSource.camera),
+=======
+          _PickerOption(
+            icon: Icons.photo_library_outlined,
+            label: 'Gallery',
+            onTap: () => _pick(ImageSource.gallery),
+          ),
+          const SizedBox(height: 8),
+          _PickerOption(
+            icon: Icons.camera_alt_outlined,
+            label: 'Camera',
+            onTap: () => _pick(ImageSource.camera),
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
           ),
         ],
       ),
@@ -121,8 +155,11 @@ class ImagePickerPanel extends StatelessWidget {
   }
 }
 
+<<<<<<< HEAD
 // ─────────────────────────────────────────────────────────────────────────────
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 class _PickerOption extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -139,7 +176,10 @@ class _PickerOption extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+<<<<<<< HEAD
         width: double.infinity,
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.07),

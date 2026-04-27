@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+// lib/widgets/nft_widgets/draggable_image.dart
+
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 import 'package:flutter/material.dart';
 import 'package:nft_create/models/image_item.dart';
 
@@ -40,6 +45,13 @@ class _DraggableImageState extends State<DraggableImage> {
   static const double _baseSize = 120.0;
   static const double _pad = 14.0;
 
+<<<<<<< HEAD
+=======
+  // ── Filter → ColorFilter ──────────────────────────────────────────────────
+  // FIX: Return null for 'none' so we never wrap with a no-op ColorFilter.
+  // The old code used ColorFilter.mode(Colors.transparent, BlendMode.src)
+  // which renders the image as a black rectangle.
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   ColorFilter? _colorFilter(ImageFilter f) {
     switch (f) {
       case ImageFilter.none:
@@ -139,6 +151,14 @@ class _DraggableImageState extends State<DraggableImage> {
     }
   }
 
+<<<<<<< HEAD
+=======
+  // ── Build the image widget (file OR bytes) ────────────────────────────────
+  // FIX: Wrap with ColorFiltered only when a filter is actually needed.
+  // Previously the bytes branch always wrapped — even for ImageFilter.none —
+  // with `ColorFilter.mode(Colors.transparent, BlendMode.src)` which
+  // composites the image with transparent black → black rectangle.
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   Widget _buildImage(double size, ColorFilter? cf) {
     final bytes = widget.item.bytes;
     final file = widget.item.file;
@@ -146,6 +166,10 @@ class _DraggableImageState extends State<DraggableImage> {
     Widget raw;
 
     if (bytes != null && bytes.isNotEmpty) {
+<<<<<<< HEAD
+=======
+      // AI-generated image stored in memory
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
       raw = Image.memory(
         bytes,
         width: size,
@@ -173,6 +197,10 @@ class _DraggableImageState extends State<DraggableImage> {
       return _errorPlaceholder(size);
     }
 
+<<<<<<< HEAD
+=======
+    // Only wrap with ColorFiltered when a real filter is selected
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
     if (cf != null) {
       return ColorFiltered(colorFilter: cf, child: raw);
     }

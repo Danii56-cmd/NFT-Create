@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 import 'dart:convert';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
@@ -48,6 +51,10 @@ enum SymmetryMode { none, horizontal, vertical, quad }
 
 enum TextEffect { none, shadow, outline, glow }
 
+<<<<<<< HEAD
+=======
+// ── Model ─────────────────────────────────────────────────────────────────────
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 class StyledTextData {
   final String text;
   final Color color;
@@ -55,7 +62,10 @@ class StyledTextData {
   final TextEffect effect;
   final Color effectColor;
   final FontWeight fontWeight;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   const StyledTextData({
     required this.text,
     required this.color,
@@ -64,6 +74,7 @@ class StyledTextData {
     this.effectColor = Colors.black,
     this.fontWeight = FontWeight.bold,
   });
+<<<<<<< HEAD
 
   // ADD THIS:
   StyledTextData copyWith({
@@ -83,6 +94,8 @@ class StyledTextData {
       fontWeight: fontWeight ?? this.fontWeight,
     );
   }
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -105,10 +118,13 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
   Offset _offsetStart = Offset.zero;
   bool _isZooming = false;
   bool _zoomEnabled = false;
+<<<<<<< HEAD
   bool get _canDraw =>
       _p.tool == DrawingTool.pen ||
       _p.tool == DrawingTool.eraser ||
       _p.tool == DrawingTool.shapes;
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   static const double _minScale = 0.5;
   static const double _maxScale = 5.0;
   bool _isGenerating = false; // ← Add this line
@@ -155,6 +171,10 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
 
   Offset _toCanvas(Offset screen) => (screen - _offset) / _scale;
 
+<<<<<<< HEAD
+=======
+  // ── Gesture handlers (extracted to avoid lambda allocations in build) ─────
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   late final NFTCreatorProvider _provider;
   bool _providerCached = false;
 
@@ -166,20 +186,29 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
     return _provider;
   }
 
+<<<<<<< HEAD
   void _onTapDown(TapDownDetails d) {
     final localPos = _toCanvas(d.localPosition);
     // Always handle tap (shows toolbar if hidden, places emoji, etc.)
     _p.handleTapDown(localPos);
   }
+=======
+  void _onTapDown(TapDownDetails d) =>
+      _p.handleTapDown(_toCanvas(d.localPosition));
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 
   void _onScaleStart(ScaleStartDetails d) {
     _prevScale = _scale;
     _focalStart = d.focalPoint;
     _offsetStart = _offset;
     _isZooming = d.pointerCount >= 2;
+<<<<<<< HEAD
     if (d.pointerCount == 1 && !_isZooming && _canDraw) {
       _p.handlePanStart(_toCanvas(d.localFocalPoint));
     }
+=======
+    if (d.pointerCount == 1) _p.handlePanStart(_toCanvas(d.localFocalPoint));
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   }
 
   void _onScaleUpdate(ScaleUpdateDetails d) {
@@ -190,15 +219,23 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
         _rebuildTransform();
       });
       _isZooming = true;
+<<<<<<< HEAD
     } else if (d.pointerCount == 1 && !_isZooming && _canDraw) {
+=======
+    } else if (d.pointerCount == 1 && !_isZooming) {
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
       _p.handlePanUpdate(_toCanvas(d.localFocalPoint));
     }
   }
 
   void _onScaleEnd(ScaleEndDetails d) {
+<<<<<<< HEAD
     if (!_isZooming && _canDraw) {
       _p.handlePanEnd();
     }
+=======
+    if (!_isZooming) _p.handlePanEnd();
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
     _isZooming = false;
   }
 
@@ -392,13 +429,17 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
                             borderRadius: const BorderRadius.all(
                               Radius.circular(16),
                             ),
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
                             child: _CanvasContent(
                               symmetryMode: _symmetryMode,
                               noiseIntensity: _noiseIntensity,
                               styledTexts: _styledTexts,
                               onDeleteStyled: (i) =>
                                   setState(() => _styledTexts.removeAt(i)),
+<<<<<<< HEAD
                               onEditStyled: (i, newText) => setState(() {
                                 // ADD THIS
                                 _styledTexts[i] = _styledTexts[i].copyWith(
@@ -406,6 +447,8 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
                                 );
                               }),
                               blendMode: _blendMode,
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
                             ),
                           ),
                         ),
@@ -544,6 +587,7 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
             _toolBtn(
               Icons.brush,
               'Pen Style',
+<<<<<<< HEAD
               active: p.tool == DrawingTool.pen || p.showPenStylePicker,
               onTap: () {
                 if (p.tool == DrawingTool.pen) {
@@ -552,12 +596,17 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
                   p.setTool(DrawingTool.pen);
                 }
               },
+=======
+              active: p.showPenStylePicker,
+              onTap: p.togglePenStylePicker,
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
             ),
             _toolBtn(Icons.save_alt, 'Save', onTap: () => _saveToGallery(ctx)),
             _toolBtn(
               Icons.close,
               'Erase',
               active: p.tool == DrawingTool.eraser,
+<<<<<<< HEAD
               onTap: () {
                 if (p.tool == DrawingTool.eraser) {
                   p.setTool(DrawingTool.none); // go to neutral, not pen
@@ -565,6 +614,13 @@ class _NFTCreatorScreenState extends State<NFTCreatorScreen> {
                   p.setTool(DrawingTool.eraser);
                 }
               },
+=======
+              onTap: () => p.setTool(
+                p.tool == DrawingTool.eraser
+                    ? DrawingTool.pen
+                    : DrawingTool.eraser,
+              ),
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
             ),
             // Colour swatch
             GestureDetector(
@@ -903,30 +959,48 @@ class _ToolbarData {
   int get hashCode => Object.hash(visible, tool, strokeColor, showPenStyle);
 }
 
+<<<<<<< HEAD
+=======
+// ══════════════════════════════════════════════════════════════════════════════
+// _CanvasContent — isolated subtree so only canvas-relevant state causes repaints
+// ══════════════════════════════════════════════════════════════════════════════
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 class _CanvasContent extends StatelessWidget {
   final SymmetryMode symmetryMode;
   final double noiseIntensity;
   final List<StyledTextData> styledTexts;
   final void Function(int) onDeleteStyled;
+<<<<<<< HEAD
   final void Function(int, String) onEditStyled;
   final BlendMode blendMode;
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 
   const _CanvasContent({
     required this.symmetryMode,
     required this.noiseIntensity,
     required this.styledTexts,
     required this.onDeleteStyled,
+<<<<<<< HEAD
     required this.onEditStyled,
     required this.blendMode,
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   });
 
   @override
   Widget build(BuildContext context) {
     final p = context.watch<NFTCreatorProvider>();
+<<<<<<< HEAD
 
     return Stack(
       children: [
         // 1. Background
+=======
+    return Stack(
+      children: [
+        // Background
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         Positioned.fill(
           child: RepaintBoundary(
             child: Container(
@@ -936,25 +1010,40 @@ class _CanvasContent extends StatelessWidget {
           ),
         ),
 
+<<<<<<< HEAD
         // 2. Drawing layer — blend mode applied here
+=======
+        // Drawing strokes — wrapped in its own RepaintBoundary
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         RepaintBoundary(
           child: CustomPaint(
             painter: DrawingPainter(
               strokes: p.strokes,
               currentStroke: p.currentStroke,
+<<<<<<< HEAD
               shapes: p.canvasItems
                   .where((item) => item.type == CanvasItemType.shape)
                   .map((item) => item.data as ShapeItem)
                   .toList(),
+=======
+              shapes: const [],
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
             ),
             size: Size.infinite,
           ),
         ),
 
+<<<<<<< HEAD
         // 3. Canvas items (images, shapes, text, emoji)
         ..._buildCanvasItems(context, p),
 
         // 4. Styled Texts
+=======
+        // Canvas items
+        ..._buildCanvasItems(context, p),
+
+        // Styled text
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         ...List.generate(
           styledTexts.length,
           (i) => _DraggableStyledText(
@@ -962,11 +1051,18 @@ class _CanvasContent extends StatelessWidget {
             style: styledTexts[i],
             initialPosition: Offset(80 + i * 12.0, 120 + i * 12.0),
             onDelete: () => onDeleteStyled(i),
+<<<<<<< HEAD
             onEdit: (newText) => onEditStyled(i, newText),
           ),
         ),
 
         // 5. Symmetry Guide
+=======
+          ),
+        ),
+
+        // Symmetry guide — wrapped so it doesn't invalidate stroke layer
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         if (symmetryMode != SymmetryMode.none)
           RepaintBoundary(
             child: CustomPaint(
@@ -975,7 +1071,11 @@ class _CanvasContent extends StatelessWidget {
             ),
           ),
 
+<<<<<<< HEAD
         // 6. Noise Overlay
+=======
+        // Noise overlay — wrapped so slider drags don't repaint everything
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         if (noiseIntensity > 0)
           RepaintBoundary(
             child: CustomPaint(
@@ -984,7 +1084,11 @@ class _CanvasContent extends StatelessWidget {
             ),
           ),
 
+<<<<<<< HEAD
         // 7. Empty State
+=======
+        // Empty state
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         if (p.isEmpty && styledTexts.isEmpty)
           Center(
             child: GestureDetector(
@@ -1006,7 +1110,10 @@ class _CanvasContent extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
   // Background Pattern
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   static Widget _buildBgPattern(NFTCreatorProvider p) {
     if (p.bgStyle == BgStyle.dots)
       return CustomPaint(painter: _DotPatternPainter(p.bgColor2));
@@ -1017,7 +1124,10 @@ class _CanvasContent extends StatelessWidget {
     return const SizedBox.shrink();
   }
 
+<<<<<<< HEAD
   // Canvas Items (Image, Shape, Text, Emoji)
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   static List<Widget> _buildCanvasItems(
     BuildContext context,
     NFTCreatorProvider p,
@@ -1038,7 +1148,10 @@ class _CanvasContent extends StatelessWidget {
             onToggleLock: () => p.toggleLock(ci),
             onFilterChanged: (f) => p.setImageFilter(ci, f),
           );
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         case CanvasItemType.shape:
           final s = ci.data as ShapeItem;
           return DraggableShape(
@@ -1051,7 +1164,10 @@ class _CanvasContent extends StatelessWidget {
             onDuplicate: () => p.duplicate(ci),
             onToggleLock: () => p.toggleLock(ci),
           );
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         case CanvasItemType.text:
           final t = ci.data as TextItem;
           return DraggableText(
@@ -1064,7 +1180,10 @@ class _CanvasContent extends StatelessWidget {
             onDuplicate: () => p.duplicate(ci),
             onToggleLock: () => p.toggleLock(ci),
           );
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         case CanvasItemType.emoji:
           final e = ci.data as EmojiItem;
           return DraggableEmoji(
@@ -1077,11 +1196,18 @@ class _CanvasContent extends StatelessWidget {
             onDuplicate: () => p.duplicate(ci),
             onToggleLock: () => p.toggleLock(ci),
           );
+<<<<<<< HEAD
+=======
+        // ignore: unreachable_switch_default
+        default:
+          return const SizedBox.shrink();
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
       }
     }).toList();
   }
 }
 
+<<<<<<< HEAD
 // ── BlendMask helper widget ───────────────────────────────────────────────────
 // Flutter has no built-in widget to apply a BlendMode to a child widget tree,
 // so we use a custom RenderObject to do it via saveLayer.
@@ -1156,6 +1282,11 @@ class RenderBlendMask extends RenderProxyBox {
 class _EmptyStateIcon extends StatelessWidget {
   const _EmptyStateIcon();
 
+=======
+// Extracted const widget — avoids re-instantiation on every build
+class _EmptyStateIcon extends StatelessWidget {
+  const _EmptyStateIcon();
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   @override
   Widget build(BuildContext context) => const SizedBox(
     width: 64,
@@ -1167,7 +1298,13 @@ class _EmptyStateIcon extends StatelessWidget {
   );
 }
 
+<<<<<<< HEAD
 // _FloatingPanels — consumes provider only for the panels it needs
+=======
+// ══════════════════════════════════════════════════════════════════════════════
+// _FloatingPanels — consumes provider only for the panels it needs
+// ══════════════════════════════════════════════════════════════════════════════
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
 class _FloatingPanels extends StatelessWidget {
   final void Function(int) onDeleteStyled;
   const _FloatingPanels({required this.onDeleteStyled});
@@ -1263,6 +1400,7 @@ class _FloatingPanels extends StatelessWidget {
             child: LayerPanel(
               layers: p.layers,
               activeIndex: p.activeLayer,
+<<<<<<< HEAD
               canvasItems: p.canvasItems,
               onAdd: p.addLayer,
               onSelect: p.selectLayer,
@@ -1282,6 +1420,11 @@ class _FloatingPanels extends StatelessWidget {
                 // ignore: invalid_use_of_protected_member
                 p.notifyListeners();
               },
+=======
+              onAdd: p.addLayer,
+              onSelect: p.selectLayer,
+              onClose: p.closeAllPanels,
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
             ),
           ),
         if (p.showImagePicker)
@@ -2191,29 +2334,41 @@ class _DraggableStyledText extends StatefulWidget {
   final StyledTextData style;
   final Offset initialPosition;
   final VoidCallback onDelete;
+<<<<<<< HEAD
   final void Function(String newText) onEdit;
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   const _DraggableStyledText({
     super.key,
     required this.style,
     required this.initialPosition,
     required this.onDelete,
+<<<<<<< HEAD
     required this.onEdit,
   });
 
+=======
+  });
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   @override
   State<_DraggableStyledText> createState() => _DraggableStyledTextState();
 }
 
 class _DraggableStyledTextState extends State<_DraggableStyledText> {
   late Offset _pos;
+<<<<<<< HEAD
   late double _fontSize;
   bool _showControls = false;
 
+=======
+  bool _showControls = false;
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   @override
   void initState() {
     super.initState();
     _pos = widget.initialPosition;
+<<<<<<< HEAD
     _fontSize = widget.style.fontSize;
   }
 
@@ -2253,6 +2408,8 @@ class _DraggableStyledTextState extends State<_DraggableStyledText> {
     if (result != null && result.isNotEmpty) {
       widget.onEdit(result);
     }
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   }
 
   @override
@@ -2262,6 +2419,7 @@ class _DraggableStyledTextState extends State<_DraggableStyledText> {
       top: _pos.dy,
       child: GestureDetector(
         onTap: () => setState(() => _showControls = !_showControls),
+<<<<<<< HEAD
         onDoubleTap: _editText,
         // FIXED: Removed onPanUpdate because we are already using onScaleUpdate
         onScaleStart: (details) {
@@ -2278,10 +2436,14 @@ class _DraggableStyledTextState extends State<_DraggableStyledText> {
             }
           });
         },
+=======
+        onPanUpdate: (d) => setState(() => _pos += d.delta),
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (_showControls)
+<<<<<<< HEAD
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -2323,6 +2485,26 @@ class _DraggableStyledTextState extends State<_DraggableStyledText> {
                 ],
               ),
             _buildText(widget.style.copyWith(fontSize: _fontSize)),
+=======
+              GestureDetector(
+                onTap: widget.onDelete,
+                child: Container(
+                  width: 28,
+                  height: 28,
+                  margin: const EdgeInsets.only(bottom: 4),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                ),
+              ),
+            _buildText(widget.style),
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
           ],
         ),
       ),
@@ -2335,7 +2517,10 @@ class _DraggableStyledTextState extends State<_DraggableStyledText> {
       fontSize: s.fontSize,
       fontWeight: s.fontWeight,
     );
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
     switch (s.effect) {
       case TextEffect.shadow:
         return Text(
@@ -2372,11 +2557,19 @@ class _DraggableStyledTextState extends State<_DraggableStyledText> {
         );
       case TextEffect.glow:
         return ShaderMask(
+<<<<<<< HEAD
           shaderCallback: (bounds) => LinearGradient(
             colors: [s.color, s.effectColor],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ).createShader(bounds),
+=======
+          shaderCallback: (b) => LinearGradient(
+            colors: [s.color, s.effectColor],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ).createShader(b),
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
           child: Text(s.text, style: base.copyWith(color: Colors.white)),
         );
       case TextEffect.none:
@@ -2465,6 +2658,10 @@ class _SymmetryToolbar extends StatelessWidget {
 class _SymmetryGuidePainter extends CustomPainter {
   final SymmetryMode mode;
   const _SymmetryGuidePainter(this.mode);
+<<<<<<< HEAD
+=======
+  // Pre-computed const color — avoids withOpacity allocation on every paint
+>>>>>>> 2bc536004d56b3337f5650ef5e62124308594628
   static const _lineColor = Color(0x80F5A623); // kOrange at ~50% opacity
   @override
   void paint(Canvas canvas, Size size) {
